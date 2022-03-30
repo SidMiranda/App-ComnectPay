@@ -2,7 +2,6 @@ package br.com.comnect.comnectpay105;
 
 import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,7 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.HashMap;
 
 public class CallScopePay extends AppCompatActivity {
-    String numPedido;
+    String  numPedido,
+            valorPagamento,
+            parcela,
+            action,
+            atrAplicacao;
+
     int statusPedido;
 
     @Override
@@ -23,25 +27,26 @@ public class CallScopePay extends AppCompatActivity {
         Log.e("ServicePay", "opening CallScopePay...");
 
         Intent i = getIntent();
-        String valor = i.getStringExtra("VALOR");
-        String parcela = i.getStringExtra("QTD_MAX_PARCELA");
+        valorPagamento = i.getStringExtra("VALOR");
+        parcela = i.getStringExtra("QTD_MAX_PARCELA");
         numPedido = i.getStringExtra("PEDIDO");
-        String fp = i.getStringExtra("FORMA_PAGAMENTO");
+        action = i.getStringExtra("ACTION");
+        atrAplicacao = i.getStringExtra("ATRIB_APLICACAO");
 
-        Log.e("ServicePay", "getting param " + valor + " " + parcela + " " + numPedido + " " + fp);
-        goToScope(valor, fp, parcela);
+        goToScope(valorPagamento, action, parcela, atrAplicacao);
 
     }
 
-    public void goToScope(String valor, String fp, String qtd_parcela){
+    public void goToScope(String valor, String action, String qtd_parcela, String atr){
         Intent i = new Intent();
 
-        String mth = "br.com.oki.scope." + fp;
+        String mth = "br.com.oki.scope." + action;
         Log.e("ServicePay", "setting intent -> " + mth);
         i.setAction(mth);
 
         i.putExtra("VALOR", valor.replace(",", ""));
         i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
+        i.putExtra("ATRIB_APLICACAO", atr);
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
         Log.e("ServicePay", "waiting for result..");

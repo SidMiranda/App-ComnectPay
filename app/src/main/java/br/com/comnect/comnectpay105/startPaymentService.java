@@ -15,7 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class startPaymentService extends Service {
-    String pdv = "0";
+    String pdv = "3";
     String valor, fp, pedido;
     public static int aux = 0;
 
@@ -25,15 +25,12 @@ public class startPaymentService extends Service {
                 new Runnable() {
                     @Override
                     public void run() {
-                        Log.e("ServicePay", "new thread");
+                        Log.e("ServicePay", "new thread created");
                         while (true) {
-                            //Log.e("ServicePay", "inside while");
                             if(aux == 0){
                                 verificaPagamento();
-                                //Log.e("ServicePay", "inside if");
                             }
                             try {
-                                //Log.e("ServicePay", "inside try");
                                 Thread.sleep(5000);
                             } catch (Exception e) {
                                 e.printStackTrace();
@@ -52,8 +49,6 @@ public class startPaymentService extends Service {
     }
 
     private void verificaPagamento(){
-        Log.e("ServicePay", "Service is running...");
-        pdv = "3";
         checkPdv check = new checkPdv();
         check.execute();
     }
@@ -78,7 +73,7 @@ public class startPaymentService extends Service {
         try {
             obj = new JSONObject(jsonS);
             JSONArray pedidos = obj.getJSONArray("result");
-            Log.e("ServicePay", "parsing list");
+            Log.e("ServicePay", "verify pendent payment");
             if(pedidos != null && pedidos.length() > 0){
 
                 valor = pedidos.getJSONObject(0).getString("Valor");
@@ -86,7 +81,7 @@ public class startPaymentService extends Service {
                 pedido = pedidos.getJSONObject(0).getString("Numero");
 
                 aux = 1;
-                Log.e("ServicePay", "setting aux = " + aux);
+                Log.e("ServicePay", "stopping service CONSULTA_API");
 
                 callScope();
             }
@@ -100,11 +95,10 @@ public class startPaymentService extends Service {
         Intent i = new Intent(startPaymentService.this, CallScopePay.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("VALOR", valor);
-        i.putExtra("FORMA_PAGAMENTO", fp);
         i.putExtra("PEDIDO", pedido);
+        i.putExtra("ACTION", fp);
+        i.putExtra("ATRIB_APLICACAO", "");
         i.putExtra("QTD_MAX_PARCELA", "1");
-
-        Log.e("ServicePay", valor + " " + fp + " " + pedido);
 
         startActivity(i);
     }
