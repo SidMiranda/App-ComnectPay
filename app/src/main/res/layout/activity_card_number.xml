@@ -4,6 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
     tools:context=".CardNumberActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DIGITE O CARTÃO"
+        android:textSize="30dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center">
+
+    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60"
+            android:text="6 primeiros digitos">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:textSize="18dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            android:text="4 ultimos">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="60">
+
+        </EditText>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40">
+
+
+        </EditText>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Exemplo:"
+        android:textSize="28dp">
+
+    </TextView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/cardEx" />
+
 
 </LinearLayout>
