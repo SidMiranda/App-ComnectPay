@@ -132,7 +132,7 @@ public class HomeFragment extends Fragment{
                 numPedido = pedidos.getJSONObject(0).getString("Numero");
 
                 setStatus(2);
-                startActivityForResult(goToScope(valor.replace(",", ""), fp), 100);
+                startActivityForResult(goToScope(valor.replace(",", ""), fp, ""), 100);
             }else{
                 Intent i = new Intent(getActivity(), PayActivity.class);
                 startActivity(i);

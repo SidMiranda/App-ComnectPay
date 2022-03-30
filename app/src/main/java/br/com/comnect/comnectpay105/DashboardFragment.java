@@ -115,7 +115,7 @@ public class DashboardFragment extends Fragment {
 
                             if(status.equals("pendente")){
                                 setStatus(2);
-                                startActivityForResult(goToScope(valor, fp), 100);
+                                startActivityForResult(goToScope(valor, fp, ""), 100);
                             }else{
                                 Toast.makeText(getActivity(), "Pedido não esta mais disponivel! | " + status, Toast.LENGTH_SHORT).show();
                             }
@@ -194,7 +194,7 @@ public class DashboardFragment extends Fragment {
             String valor = pedidos.getJSONObject(0).getString("Valor");
             String fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
 
-            startActivityForResult(goToScope(valor.replace(",", ""), fp), 100);
+            startActivityForResult(goToScope(valor.replace(",", ""), fp, ""), 100);
 
 
         } catch (JSONException e) {

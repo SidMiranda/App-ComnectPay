@@ -1,6 +1,7 @@
 package br.com.comnect.comnectpay105;
 
 import android.content.Intent;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -14,7 +15,7 @@ import java.nio.charset.StandardCharsets;
 
 public class AppDefault {
 
-    public static Intent goToScope(String valor, String fp){
+    public static Intent goToScope(String valor, String fp, String atr){
         Intent i = new Intent();
         String mth = "br.com.oki.scope." + fp;
         i.setAction(mth);
@@ -23,7 +24,10 @@ public class AppDefault {
         i.putExtra("CONSULTA_PLANOS", "0");
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
-        i.putExtra("ATRIB_APLICACAO", setAtr());
+        if(atr != "") {
+            Log.e("ServicePay", "setando ATRIB_APLICACAO TO " + setAtr());
+            i.putExtra("ATRIB_APLICACAO", setAtr());
+        }
 
         return i;
     }
