@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.fragment;
 
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
 import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;

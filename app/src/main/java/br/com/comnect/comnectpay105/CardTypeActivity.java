@@ -28,65 +28,29 @@ public class CardTypeActivity extends AppCompatActivity {
 
         btn_credito.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                goToScope("COMPRA_CREDITO", setAtr());
-            }
+            public void onClick(View view) {callScope("COMPRA_CREDITO");}
         });
 
         btn_debito.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                goToScope("COMPRA_DEBITO", setAtr());
-
-            }
+            public void onClick(View view) {callScope("COMPRA_DEBITO");}
         });
     }
 
-    private void goToScope(String fp, String atr){
-        Intent intent = new Intent();
-        intent.setAction("br.com.oki.scope." + fp);
-        intent.putExtra("VALOR", valorPagamento);
-        intent.putExtra("QTD_MAX_PARCELA", "1");
-        intent.putExtra("APP_TEMA", "APP_TEMA_AZUL");
-        Log.e("ServicePay", "setando ATRIB_APLICACAO TO " + atr);
-        intent.putExtra("ATRIB_APLICACAO", atr);
+    private void callScope(String fp){
+        Intent i = new Intent(CardTypeActivity.this, CallScopePay.class);
+        i.putExtra("VALOR", valorPagamento);
+        i.putExtra("PEDIDO", "");
+        i.putExtra("ACTION", fp);
+        i.putExtra("ATRIB_APLICACAO", "");
+        i.putExtra("QTD_MAX_PARCELA", "1");
 
-        startActivityForResult(intent, 100);
-    }
-
-    public static String setAtr(){
-        String atr;
-
-        //FORMATO
-        //nnc1tt1xx..x1c2tt2xx..x2cnttnxx..xn
-
-        /* REFERENCIA
-        nn = quantidade de atributos (tamanho 2)
-        c1 = código do atributo 1 (tamanho 2)
-        tt1 = tamanho do atributo 1 (tamanho 3)
-        xx..x1 = atributo 1 (tamanho tt1)
-        */
-
-        atr = "0101003666";
-
-        return atr;
+        startActivityForResult(i, 100);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            if (data != null) {
-                HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
-
-                if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
-                    Toast.makeText(this, "Transação aprovada! " + map.get("CODIGO_CONTROLE"), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } else {
-            Toast.makeText(this, "Erro " + resultCode, Toast.LENGTH_SHORT).show();
-        }
-
         finish();
     }
 }

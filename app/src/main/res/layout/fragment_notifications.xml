@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="10dp"
-    tools:context=".NotificationsFragment">
+    tools:context=".fragment.NotificationsFragment">
 
     <TextView
         android:layout_width="match_parent"

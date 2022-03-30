@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.fragment;
 
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
 import static br.com.comnect.comnectpay105.AppDefault.setStatus;
@@ -23,7 +23,13 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import br.com.comnect.comnectpay105.CallScopePay;
+import br.com.comnect.comnectpay105.EstornoActivity;
+import br.com.comnect.comnectpay105.PayActivity;
+import br.com.comnect.comnectpay105.R;
+import br.com.comnect.comnectpay105.ValueKeyboardActivity;
 import br.com.comnect.comnectpay105.databinding.FragmentHomeBinding;
+import br.com.comnect.comnectpay105.startPaymentService;
 
 public class HomeFragment extends Fragment{
     Button btn_pagar, btn_recarga, btn_cupom, btn_pix, btn_extorno, btn_btc;

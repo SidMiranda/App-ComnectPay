@@ -30,6 +30,9 @@ public class CallScopePay extends AppCompatActivity {
         action = i.getStringExtra("ACTION");
         atrAplicacao = i.getStringExtra("ATRIB_APLICACAO");
 
+        startPaymentService.aux = 1;
+        Log.e("ServicePay", "stopping service CONSULTA_API");
+
         goToScope(valorPagamento, action, parcela, atrAplicacao);
 
     }
@@ -46,13 +49,12 @@ public class CallScopePay extends AppCompatActivity {
 
         i.putExtra("VALOR", valor);
         i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
-        i.putExtra("ATRIB_APLICACAO", atr);
+        i.putExtra("ATRIB_APLICACAO", "0101042022");
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
         Log.e("ServicePay", "waiting for result..");
+
         startActivityForResult(i, 100);
-
-
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

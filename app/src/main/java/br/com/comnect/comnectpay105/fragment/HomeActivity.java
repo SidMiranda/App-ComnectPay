@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,9 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import br.com.comnect.comnectpay105.R;
 import br.com.comnect.comnectpay105.databinding.ActivityHomeBinding;
+import br.com.comnect.comnectpay105.startPaymentService;
 
 public class HomeActivity extends AppCompatActivity {
 

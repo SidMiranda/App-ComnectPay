@@ -80,9 +80,6 @@ public class startPaymentService extends Service {
                 fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
                 pedido = pedidos.getJSONObject(0).getString("Numero");
 
-                aux = 1;
-                Log.e("ServicePay", "stopping service CONSULTA_API");
-
                 callScope();
             }
 

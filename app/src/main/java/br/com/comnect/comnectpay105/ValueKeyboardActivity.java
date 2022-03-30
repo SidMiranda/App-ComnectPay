@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -97,21 +96,6 @@ public class ValueKeyboardActivity extends AppCompatActivity {
         txt_valor.setText("R$ 0,00");
     }
 
-    public void pagar(View v){
-        String valor = txt_valor.getText().toString();
-        valor = valor.substring(3);
-        valor = valor.replace(",", "");
-
-        if(Integer.parseInt(valor) > 0){
-            Intent i = new Intent(ValueKeyboardActivity.this, CardTypeActivity.class);
-            i.putExtra("VALOR", valor);
-            startActivityForResult(i, 100);
-        }else{
-            Toast.makeText(this, "Digite um valor", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
     public void addValor(String n){
         valor = valor + n;
 
@@ -145,25 +129,31 @@ public class ValueKeyboardActivity extends AppCompatActivity {
     }
 
     private void goTo(String from){
-        switch(from){
-            case "pix":
-                String valor = txt_valor.getText().toString();
-                valor = valor.substring(3);
-                String valorFormatado = valor.replace(",", "");
+        Intent i = null;
+        valor = txt_valor.getText().toString();
+        valor = valor.substring(3);
+        valor = valor.replace(",", "");
 
-                if(Integer.parseInt(valorFormatado) > 0){
-                    Intent i = new Intent(ValueKeyboardActivity.this, PixActivity.class);
-                    i.putExtra("VALUE", valor);
-                    startActivity(i);
-                }else{
-                    Toast.makeText(this, "Digite um valor", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case "bitcoin":
-                Toast.makeText(this, from, Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                finish();
+        if(Integer.parseInt(valor) > 0){
+            switch(from) {
+                case "pix":
+                    i = new Intent(ValueKeyboardActivity.this, PixActivity.class);
+                    break;
+                case "bitcoin":
+                    Toast.makeText(this, from, Toast.LENGTH_SHORT).show();
+                    break;
+                case "pagar":
+                    i = new Intent(ValueKeyboardActivity.this, CardTypeActivity.class);
+                    break;
+                default:
+                    finish();
+            }
+
+            i.putExtra("VALUE", valor);
+            startActivity(i);
+
+        }else{
+            Toast.makeText(this, "Digite um valor", Toast.LENGTH_SHORT).show();
         }
     }
 }
