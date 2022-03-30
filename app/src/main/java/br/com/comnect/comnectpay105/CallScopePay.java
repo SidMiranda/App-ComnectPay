@@ -49,7 +49,7 @@ public class CallScopePay extends AppCompatActivity {
 
         i.putExtra("VALOR", valor);
         i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
-        i.putExtra("ATRIB_APLICACAO", "0101042022");
+        i.putExtra("ATRIB_APLICACAO", "05010042022"); // exemplo 02 01 014 (11) 6097-1234 02 006 123456
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
         Log.e("ServicePay", "waiting for result..");
