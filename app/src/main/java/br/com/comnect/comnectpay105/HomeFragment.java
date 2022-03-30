@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment{
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), EstornoActivity.class);
+                Log.e("ServicePay", "Abrindo estorno!");
                 startActivity(i);
             }
         });

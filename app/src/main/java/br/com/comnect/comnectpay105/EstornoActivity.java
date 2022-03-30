@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ import java.util.HashMap;
 
 public class EstornoActivity extends AppCompatActivity {
     ListView lv_pedidos;
-    Button btn_refresh, btn_voltar;
+    Button btn_refresh, btn_voltar, btn_buscar;
     ProgressDialog load;
     String numPedido;
     int statusPedido;
@@ -44,14 +45,16 @@ public class EstornoActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         cardNumber = i.getStringExtra("NUMERO_CARTAO");
+        Log.e("ServicePay", "NUMERO DO CARTAO -> " + cardNumber);
 
         lv_pedidos = findViewById(R.id.lv_pedidos);
         btn_refresh = findViewById(R.id.btn_refresh);
         btn_voltar = findViewById(R.id.btn_voltar);
+        btn_buscar = findViewById(R.id.btn_buscar);
 
         refreshList();
 
-        btn_refresh.setOnClickListener(new View.OnClickListener() {
+        btn_refresh.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 refreshList();
@@ -65,7 +68,16 @@ public class EstornoActivity extends AppCompatActivity {
             }
         });
 
+        btn_buscar.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(EstornoActivity.this, CardNumberActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     public void refreshList(){
         GetJson list = new GetJson();
@@ -126,9 +138,6 @@ public class EstornoActivity extends AppCompatActivity {
                             Toast.makeText(EstornoActivity.this, controle + " | " + valor, Toast.LENGTH_SHORT).show();
 
                             //estorno(controle, valor.replace(".", ""));
-
-                            Intent intent = new Intent(EstornoActivity.this, CardNumberActivity.class);
-                            startActivity(intent);
 
                             numPedido = pedidos.getJSONObject(i).getString("Numero");
                             /*String valor = pedidos.getJSONObject(i).getString("Valor").replace(",", "");
