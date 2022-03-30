@@ -1,6 +1,7 @@
 package br.com.comnect.comnectpay105;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -14,6 +15,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 public class AppDefault {
+    static int statusPedido;
+    static String numPedido;
 
     public static Intent goToScope(String valor, String fp, String atr){
         Intent i = new Intent();
@@ -167,4 +170,31 @@ public class AppDefault {
         return buffer.toString();
     }
 
+    public static void setStatus(int status, String pedido){
+        statusPedido = status;
+        numPedido = pedido;
+        updateList();
+    }
+
+    public static void updateList(){
+        UpdateStatus update = new UpdateStatus();
+        update.execute();
+    }
+
+    private static class UpdateStatus extends AsyncTask<Void, Void, String> {
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido);
+        }
+
+        @Override
+        protected void onPostExecute(String list) {
+            startPaymentService.aux = 0;
+            Log.e("ServicePay", "starting service");
+        }
+    }
 }

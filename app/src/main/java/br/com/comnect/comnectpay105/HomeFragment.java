@@ -1,8 +1,7 @@
 package br.com.comnect.comnectpay105;
 
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.goToScope;
+import static br.com.comnect.comnectpay105.AppDefault.setStatus;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -29,9 +28,8 @@ import br.com.comnect.comnectpay105.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment{
     Button btn_pagar, btn_recarga, btn_cupom, btn_pix, btn_extorno, btn_btc;
     ProgressDialog load;
-    String numPedido;
-    int statusPedido;
-    String pdv = "0";
+    String numPedido, fp, valor;
+    String pdv = "3";
 
     private FragmentHomeBinding binding;
 
@@ -46,24 +44,19 @@ public class HomeFragment extends Fragment{
         btn_extorno = rootView.findViewById(R.id.btn_extorno);
         btn_btc = rootView.findViewById(R.id.btn_btc);
 
-        btn_extorno.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getActivity(), EstornoActivity.class);
-                Log.e("ServicePay", "Abrindo estorno!");
-                startActivity(i);
-            }
-        });
         btn_pagar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                pagar();
-            }
+            public void onClick(View view) {pagar();}
         });
 
         btn_recarga.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {recarga();}
+        });
+
+        btn_pix.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){goToKeyboard("pix");}
         });
 
         btn_cupom.setOnClickListener(new View.OnClickListener(){
@@ -73,9 +66,13 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        btn_pix.setOnClickListener(new View.OnClickListener(){
+        btn_extorno.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){goToKeyboard("pix");}
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), EstornoActivity.class);
+                Log.e("ServicePay", "Abrindo estorno!");
+                startActivity(i);
+            }
         });
 
         btn_btc.setOnClickListener(new View.OnClickListener(){
@@ -94,7 +91,6 @@ public class HomeFragment extends Fragment{
     }
 
     public void pagar(){
-        pdv = "3";
         checkPdv check = new checkPdv();
         check.execute();
 
@@ -126,14 +122,16 @@ public class HomeFragment extends Fragment{
             JSONArray pedidos = obj.getJSONArray("result");
 
             if(pedidos != null && pedidos.length() > 0){
-                String valor = pedidos.getJSONObject(0).getString("Valor");
-                String fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
-
+                valor = pedidos.getJSONObject(0).getString("Valor");
+                fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
                 numPedido = pedidos.getJSONObject(0).getString("Numero");
 
-                setStatus(2);
-                startActivityForResult(goToScope(valor.replace(",", ""), fp, ""), 100);
+                Log.e("ServicePay", "Pendent payment found!");
+
+                setStatus(2, numPedido);
+                callScope();
             }else{
+                Log.e("ServicePay", "Redirecting to PayActivity");
                 Intent i = new Intent(getActivity(), PayActivity.class);
                 startActivity(i);
             }
@@ -143,33 +141,16 @@ public class HomeFragment extends Fragment{
         }
 
     }
+    private void callScope(){
+        Intent i = new Intent(getActivity(), CallScopePay.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("VALOR", valor);
+        i.putExtra("PEDIDO", numPedido);
+        i.putExtra("ACTION", fp);
+        i.putExtra("ATRIB_APLICACAO", "");
+        i.putExtra("QTD_MAX_PARCELA", "1");
 
-
-    public void updateList(){
-        UpdateStatus update = new UpdateStatus();
-        update.execute();
-    }
-    private void setStatus(int status){
-        statusPedido = status;
-        updateList();
-        load.dismiss();
-    }
-    private class UpdateStatus extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute(){
-            //load = ProgressDialog.show(getActivity(),
-                    //"Por favor Aguarde ...", "Atualizando Status...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido);
-        }
-
-        @Override
-        protected void onPostExecute(String list){
-            load.dismiss();
-        }
+        startActivity(i);
     }
 
     public void goToKeyboard(String from){
@@ -178,7 +159,6 @@ public class HomeFragment extends Fragment{
         startActivity(i);
     }
 
-
     public void recarga(){
         Toast.makeText(getActivity(), "Não disponivel no momento", Toast.LENGTH_SHORT).show();
         //Intent i = new Intent();
@@ -186,11 +166,11 @@ public class HomeFragment extends Fragment{
         //startActivityForResult(i, 102);
     }
     public void impressaoCupom(){
-        //Toast.makeText(getActivity(), "Imprimindo Cupom...", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent();
-        i.setAction("br.com.oki.scope.REIMPRESSAO_CUPOM");
-        i.putExtra("CODIGO_CONTROLE", "03900731022");
-        startActivityForResult(i, 101);
+        Toast.makeText(getActivity(), "Imprimindo Cupom...", Toast.LENGTH_SHORT).show();
+        //Intent i = new Intent();
+        //i.setAction("br.com.oki.scope.REIMPRESSAO_CUPOM");
+        //i.putExtra("CODIGO_CONTROLE", "03900731022");
+        //startActivityForResult(i, 101);
     }
 
     @Override
@@ -205,15 +185,15 @@ public class HomeFragment extends Fragment{
                     HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
 
                     if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
-                        setStatus(3);
+                        setStatus(3, numPedido);
                         Toast.makeText(getActivity(), "Transação aprovada! " + map.get("CODIGO_CONTROLE"), Toast.LENGTH_SHORT).show();
                     } else {
-                        setStatus(1);
+                        setStatus(1, numPedido);
                         Toast.makeText(getActivity(), map.get("VALOR_TRANSACAO").toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
             } else {
-                setStatus(1);
+                setStatus(1, numPedido);
                 Toast.makeText(getActivity(), "Erro " + resultCode, Toast.LENGTH_SHORT).show();
             }
         }
