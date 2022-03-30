@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="br.com.comnect.comnectpay105">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/pay_icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Comnectpay105">
+        <activity
+            android:name=".CallScopePay"
+            android:exported="false" />
+        <activity
+            android:name=".ValueKeyboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EstornoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CardTypeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_card_type"
+            android:theme="@style/Theme.Comnectpay105.NoActionBar" />
+        <activity
+            android:name=".PayActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PixActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Design.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service android:name=".startPaymentService"
+            android:exported="false">
+
+        </service>
+    </application>
+
+</manifest>
