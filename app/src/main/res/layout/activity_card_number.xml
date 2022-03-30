@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     android:padding="10dp"
     tools:context=".CardNumberActivity">
 
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="DIGITE O CARTÃO"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:layout_marginBottom="20dp"
         android:gravity="center">
 
@@ -24,7 +25,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:layout_weight="60"
             android:text="6 primeiros digitos">
@@ -33,7 +34,7 @@
 
         <TextView
             android:layout_width="0dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:layout_weight="40"
             android:text="4 ultimos">
@@ -48,15 +49,22 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/edt_6n"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="60">
+            android:layout_weight="60"
+            android:inputType="number"
+            android:maxLength="6">
 
         </EditText>
+
         <EditText
+            android:id="@+id/edt_4n"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="40">
+            android:layout_weight="40"
+            android:inputType="number"
+            android:maxLength="4">
 
 
         </EditText>
@@ -69,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Exemplo:"
-        android:textSize="28dp">
+        android:textSize="28sp">
 
     </TextView>
 
@@ -77,7 +85,18 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cardEx" />
+        app:srcCompat="@drawable/cardex"
+        tools:srcCompat="@drawable/cardex" />
+
+    <Button
+        android:id="@+id/btn_buscar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/rounded_corner"
+        android:text="BUSCAR"
+        android:textSize="25dp">
+
+    </Button>
 
 
 </LinearLayout>

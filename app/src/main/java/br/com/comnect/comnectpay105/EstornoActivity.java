@@ -32,6 +32,7 @@ public class EstornoActivity extends AppCompatActivity {
     ProgressDialog load;
     String numPedido;
     int statusPedido;
+    String cardNumber = "0";
 
     String fromList[] = {"Numero", "Forma de Pagamento", "Valor"};
     int toList[] = {R.id.pedidos_pendentes_Numero,R.id.pedidos_pendentes_pagamento, R.id.pedidos_pendentes_valor};
@@ -40,6 +41,9 @@ public class EstornoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estorno);
+
+        Intent i = getIntent();
+        cardNumber = i.getStringExtra("NUMERO_CARTAO");
 
         lv_pedidos = findViewById(R.id.lv_pedidos);
         btn_refresh = findViewById(R.id.btn_refresh);
@@ -76,7 +80,11 @@ public class EstornoActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            return getJSONFromAPI("http://192.168.20.152/SCOPE/post-transaction.php");
+            if(cardNumber == "0") {
+                return getJSONFromAPI("http://192.168.20.152/SCOPE/post-transaction.php");
+            }else{
+                return getJSONFromAPI("http://192.168.20.152/SCOPE/post-transaction.php?cardNumber=" + cardNumber);
+            }
         }
 
         @Override
@@ -117,7 +125,10 @@ public class EstornoActivity extends AppCompatActivity {
 
                             Toast.makeText(EstornoActivity.this, controle + " | " + valor, Toast.LENGTH_SHORT).show();
 
-                            estorno(controle, valor.replace(".", ""));
+                            //estorno(controle, valor.replace(".", ""));
+
+                            Intent intent = new Intent(EstornoActivity.this, CardNumberActivity.class);
+                            startActivity(intent);
 
                             numPedido = pedidos.getJSONObject(i).getString("Numero");
                             /*String valor = pedidos.getJSONObject(i).getString("Valor").replace(",", "");
@@ -179,44 +190,6 @@ public class EstornoActivity extends AppCompatActivity {
             load.dismiss();
         }
     }
-
-    private class GetPedido extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute(){
-            load = ProgressDialog.show(EstornoActivity.this,
-                    "Por favor Aguarde ...", "Recuperando Informações do Servidor...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return getJSONFromAPI("http://192.168.20.152/API/get.php?numero=" + "num");
-        }
-
-        @Override
-        protected void onPostExecute(String list){
-            parsePedido(list);
-            load.dismiss();
-        }
-    }
-    private void parsePedido(String list){
-        String jsonS = list;
-        JSONObject obj = null;
-
-        try {
-            obj = new JSONObject(jsonS);
-            JSONArray pedidos = obj.getJSONArray("result");
-
-            String valor = pedidos.getJSONObject(0).getString("Valor");
-            String fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
-
-            startActivityForResult(goToScope(valor.replace(",", ""), fp), 100);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
