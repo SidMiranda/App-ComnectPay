@@ -23,7 +23,35 @@ public class AppDefault {
         i.putExtra("CONSULTA_PLANOS", "0");
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
+        i.putExtra("ATRIB_APLICACAO", setAtr());
+
         return i;
+    }
+
+    public static String setAtr(){
+        String atr;
+
+        //FORMATO
+        //nnc1tt1xx..x1c2tt2xx..x2cnttnxx..xn
+
+        /* REFERENCIA
+        nn = quantidade de atributos (tamanho 2)
+        c1 = código do atributo 1 (tamanho 2)
+        tt1 = tamanho do atributo 1 (tamanho 3)
+        xx..x1 = atributo 1 (tamanho tt1)
+        ...
+        c2 = código do atributo 2 (tamanho 2)
+        tt2 = tamanho do atributo 2 (tamanho 3)
+        xx..x2 = atributo 2 (tamanho tt2)
+        ...
+        cn = código do atributo n (tamanho 2)
+        ttn = tamanho do atributo n (tamanho 3)
+        xx..xn = atributo n (tamanho ttn)
+        */
+
+        atr = "0101003666";
+
+        return atr;
     }
 
     public static String getJSONFromAPI(String url){
