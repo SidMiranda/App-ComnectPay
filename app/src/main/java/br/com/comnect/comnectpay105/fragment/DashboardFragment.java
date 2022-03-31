@@ -138,7 +138,7 @@ public class DashboardFragment extends Fragment {
     private void callScope(String fp){
         Intent i = new Intent(getContext(), CallScopePay.class);
         i.putExtra("VALOR", valorPagamento);
-        i.putExtra("PEDIDO", "");
+        i.putExtra("PEDIDO", numPedido);
         i.putExtra("ACTION", fp);
         i.putExtra("ATRIB_APLICACAO", "");
         i.putExtra("QTD_MAX_PARCELA", "1");

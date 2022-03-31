@@ -16,7 +16,8 @@ public class CallScopePay extends AppCompatActivity {
             valorPagamento,
             parcela,
             action,
-            atrAplicacao;
+            atrAplicacao,
+            codControle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class CallScopePay extends AppCompatActivity {
         numPedido = i.getStringExtra("PEDIDO");
         action = i.getStringExtra("ACTION");
         atrAplicacao = i.getStringExtra("ATRIB_APLICACAO");
+        codControle = i.getStringExtra("CODIGO_CONTROLE");
 
         startPaymentService.aux = 1;
         Log.e("ServicePay", "stopping service CONSULTA_API");
@@ -48,11 +50,18 @@ public class CallScopePay extends AppCompatActivity {
         i.setAction(mth);
 
         i.putExtra("VALOR", valor);
-        i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
+
+        if(qtd_parcela != null)
+            i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
 
         // exemplo 02 01 014 (11) 6097-1234 02 006 123456
         atr = "01010042022";
-        i.putExtra("ATRIB_APLICACAO", atr);
+
+        if(atr != null)
+            i.putExtra("ATRIB_APLICACAO", atr);
+
+        if(codControle != null)
+            i.putExtra("CODIGO_CONTROLE", codControle);
 
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
@@ -73,8 +82,9 @@ public class CallScopePay extends AppCompatActivity {
                 HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
                 Log.e("ServicePay", "result with data ok");
                 if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
+                    Log.e("ServicePay", "CODIGO DE CONTROLE -> " + map.get("CODIGO_CONTROLE").toString());
                     setStatus(3, numPedido, map.get("CODIGO_CONTROLE").toString());
-                    Toast.makeText(this, "Pagamento aprovado!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,  action + " OK!", Toast.LENGTH_SHORT).show();
                     Log.e("ServicePay", "transação aprovada..");
                     finish();
                 } else {

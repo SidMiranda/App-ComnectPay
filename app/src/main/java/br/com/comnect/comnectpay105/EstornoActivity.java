@@ -1,9 +1,6 @@
 package br.com.comnect.comnectpay105;
 
-import static java.lang.String.valueOf;
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.goToScope;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,8 +28,7 @@ public class EstornoActivity extends AppCompatActivity {
     ListView lv_pedidos;
     Button btn_refresh, btn_voltar, btn_buscar;
     ProgressDialog load;
-    String numPedido;
-    int statusPedido;
+    String valorPagamento, numPedido;
     String cardNumber = "0";
 
     String fromList[] = {"Numero", "Forma de Pagamento", "Valor"};
@@ -133,20 +129,12 @@ public class EstornoActivity extends AppCompatActivity {
                         try {
 
                             String controle = pedidos.getJSONObject(i).getString("Controle");
-                            String valor = pedidos.getJSONObject(i).getString("Valor");
-
-                            Toast.makeText(EstornoActivity.this, controle + " | " + valor, Toast.LENGTH_SHORT).show();
-
-                            //estorno(controle, valor.replace(".", ""));
-
+                            valorPagamento = pedidos.getJSONObject(i).getString("Valor");
                             numPedido = pedidos.getJSONObject(i).getString("Numero");
-                            /*String valor = pedidos.getJSONObject(i).getString("Valor").replace(",", "");
-                            String fp = pedidos.getJSONObject(i).getString("Forma de Pagamento");
 
-                            if(status.equals("pendente")){
-                                setStatus(2);
-                                startActivityForResult(goToScope(valor, fp), 100);
-                           */
+                            Toast.makeText(EstornoActivity.this, controle + " | " + valorPagamento, Toast.LENGTH_SHORT).show();
+
+                            callScope("ESTORNO", controle);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -163,63 +151,14 @@ public class EstornoActivity extends AppCompatActivity {
         }
     }
 
-    public void estorno(String controle, String valor){
-        Intent iEstorno = new Intent();
-        iEstorno.setAction("br.com.oki.scope.ESTORNO");
-        iEstorno.putExtra("VALOR", valor.replace(",", ""));
-        iEstorno.putExtra("CODIGO_CONTROLE", controle);
+    private void callScope(String fp, String controle){
+        Intent i = new Intent(EstornoActivity.this, CallScopePay.class);
+        i.putExtra("VALOR", valorPagamento);
+        i.putExtra("PEDIDO", numPedido);
+        i.putExtra("ACTION", fp);
+        i.putExtra("CODIGO_CONTROLE", controle);
 
-        startActivityForResult(iEstorno, 100);
-    }
-
-
-    public void updateList(){
-        UpdateStatus update = new UpdateStatus();
-        update.execute();
-    }
-    private void setStatus(int status){
-        statusPedido = status;
-        updateList();
-        load.dismiss();
-    }
-    private class UpdateStatus extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute(){
-            load = ProgressDialog.show(EstornoActivity.this,
-                    "Por favor Aguarde ...", "Atualizando Status...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido);
-        }
-
-        @Override
-        protected void onPostExecute(String list){
-            load.dismiss();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 0) {
-            if (data != null) {
-                HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
-
-                if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
-                    setStatus(3);
-                    refreshList();
-                    Toast.makeText(EstornoActivity.this, "Transação aprovada! " + map.get("CODIGO_CONTROLE"), Toast.LENGTH_SHORT).show();
-                } else {
-                    setStatus(1);
-                    Toast.makeText(EstornoActivity.this, map.get("VALOR_TRANSACAO").toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } else {
-            setStatus(1);
-            Toast.makeText(EstornoActivity.this, "Erro " + resultCode, Toast.LENGTH_SHORT).show();
-        }
+        startActivity(i);
     }
 
 }
