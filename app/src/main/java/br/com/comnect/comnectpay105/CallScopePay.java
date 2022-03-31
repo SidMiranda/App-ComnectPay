@@ -49,7 +49,11 @@ public class CallScopePay extends AppCompatActivity {
 
         i.putExtra("VALOR", valor);
         i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
-        i.putExtra("ATRIB_APLICACAO", "05010042022"); // exemplo 02 01 014 (11) 6097-1234 02 006 123456
+
+        // exemplo 02 01 014 (11) 6097-1234 02 006 123456
+        atr = "01010042022";
+        i.putExtra("ATRIB_APLICACAO", atr);
+
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
         Log.e("ServicePay", "waiting for result..");
@@ -69,19 +73,19 @@ public class CallScopePay extends AppCompatActivity {
                 HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
                 Log.e("ServicePay", "result with data ok");
                 if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
-                    setStatus(3, numPedido);
+                    setStatus(3, numPedido, map.get("CODIGO_CONTROLE").toString());
                     Toast.makeText(this, "Pagamento aprovado!", Toast.LENGTH_SHORT).show();
                     Log.e("ServicePay", "transação aprovada..");
                     finish();
                 } else {
-                    setStatus(1, numPedido);
+                    setStatus(1, numPedido, "0");
                     Toast.makeText(this, "Erro ao processar o pagamento!", Toast.LENGTH_SHORT).show();
                     Log.e("ServicePay", "erro ao efetuar a transação..");
                     finish();
                 }
             }
         } else {
-            setStatus(1, numPedido);
+            setStatus(1, numPedido, "0");
             Toast.makeText(this, "Erro ao processar o pagamento!", Toast.LENGTH_SHORT).show();
             Log.e("ServicePay", "result erro out..");
             finish();

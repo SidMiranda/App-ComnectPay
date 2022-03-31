@@ -2,7 +2,6 @@ package br.com.comnect.comnectpay105.fragment;
 
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
 import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.goToScope;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -27,13 +26,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import br.com.comnect.comnectpay105.CallScopePay;
+import br.com.comnect.comnectpay105.CardTypeActivity;
 import br.com.comnect.comnectpay105.R;
 
 public class DashboardFragment extends Fragment {
     ListView lv_pedidos;
     Button btn_refresh;
     ProgressDialog load;
-    String numPedido;
+    String numPedido, valorPagamento;
     int statusPedido;
 
     String fromList[] = {"Numero", "Forma de Pagamento", "Valor"};
@@ -108,14 +109,12 @@ public class DashboardFragment extends Fragment {
                         try {
 
                             numPedido = pedidos.getJSONObject(i).getString("Numero");
-                            String valor = pedidos.getJSONObject(i).getString("Valor").replace(",", "");
-                            valor = valor.replace(".", "");
+                            valorPagamento = pedidos.getJSONObject(i).getString("Valor");
                             String fp = pedidos.getJSONObject(i).getString("Forma de Pagamento");
                             String status = pedidos.getJSONObject(i).getString("Status");
 
                             if(status.equals("pendente")){
-                                setStatus(2);
-                                startActivityForResult(goToScope(valor, fp, ""), 100);
+                                callScope(fp);
                             }else{
                                 Toast.makeText(getActivity(), "Pedido não esta mais disponivel! | " + status, Toast.LENGTH_SHORT).show();
                             }
@@ -136,92 +135,14 @@ public class DashboardFragment extends Fragment {
         }
     }
 
+    private void callScope(String fp){
+        Intent i = new Intent(getContext(), CallScopePay.class);
+        i.putExtra("VALOR", valorPagamento);
+        i.putExtra("PEDIDO", "");
+        i.putExtra("ACTION", fp);
+        i.putExtra("ATRIB_APLICACAO", "");
+        i.putExtra("QTD_MAX_PARCELA", "1");
 
-    public void updateList(){
-        UpdateStatus update = new UpdateStatus();
-        update.execute();
+        startActivity(i);
     }
-    private void setStatus(int status){
-        statusPedido = status;
-        updateList();
-        load.dismiss();
-    }
-    private class UpdateStatus extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute(){
-            load = ProgressDialog.show(getActivity(),
-                    "Por favor Aguarde ...", "Atualizando Status...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido);
-        }
-
-        @Override
-        protected void onPostExecute(String list){
-            load.dismiss();
-        }
-    }
-
-
-    private class GetPedido extends AsyncTask<Void, Void, String> {
-        @Override
-        protected void onPreExecute(){
-            load = ProgressDialog.show(getActivity(),
-                    "Por favor Aguarde ...", "Recuperando Informações do Servidor...");
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            return getJSONFromAPI("http://192.168.20.152/API/get.php?numero=" + "num");
-        }
-
-        @Override
-        protected void onPostExecute(String list){
-            parsePedido(list);
-            load.dismiss();
-        }
-    }
-    private void parsePedido(String list){
-        String jsonS = list;
-        JSONObject obj = null;
-
-        try {
-            obj = new JSONObject(jsonS);
-            JSONArray pedidos = obj.getJSONArray("result");
-
-            String valor = pedidos.getJSONObject(0).getString("Valor");
-            String fp = pedidos.getJSONObject(0).getString("Forma de Pagamento");
-
-            startActivityForResult(goToScope(valor.replace(",", ""), fp, ""), 100);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 0 ) {
-            if (data != null) {
-                HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
-
-                if(Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0){
-                    setStatus(3);
-                    refreshList();
-                    Toast.makeText(getActivity(), "Transação aprovada! " + map.get("CODIGO_CONTROLE"), Toast.LENGTH_SHORT).show();
-                }else{
-                    setStatus(1);
-                    Toast.makeText(getActivity(), map.get("VALOR_TRANSACAO").toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } else{
-            setStatus(1);
-            Toast.makeText(getActivity(), "Erro " + resultCode, Toast.LENGTH_SHORT).show();
-        }
-    }
-
 }

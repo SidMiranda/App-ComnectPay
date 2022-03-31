@@ -134,7 +134,7 @@ public class HomeFragment extends Fragment{
 
                 Log.e("ServicePay", "Pendent payment found!");
 
-                setStatus(2, numPedido);
+                setStatus(2, numPedido, "0");
                 callScope();
             }else{
                 Log.e("ServicePay", "Redirecting to PayActivity");
@@ -177,32 +177,6 @@ public class HomeFragment extends Fragment{
         //i.setAction("br.com.oki.scope.REIMPRESSAO_CUPOM");
         //i.putExtra("CODIGO_CONTROLE", "03900731022");
         //startActivityForResult(i, 101);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        if(requestCode == 101){
-            Toast.makeText(getActivity(), "result code -> " + resultCode, Toast.LENGTH_SHORT).show();
-
-        }else if(requestCode == 100) {
-            if (resultCode == 0) {
-                if (data != null) {
-                    HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
-
-                    if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
-                        setStatus(3, numPedido);
-                        Toast.makeText(getActivity(), "Transação aprovada! " + map.get("CODIGO_CONTROLE"), Toast.LENGTH_SHORT).show();
-                    } else {
-                        setStatus(1, numPedido);
-                        Toast.makeText(getActivity(), map.get("VALOR_TRANSACAO").toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            } else {
-                setStatus(1, numPedido);
-                Toast.makeText(getActivity(), "Erro " + resultCode, Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
 }

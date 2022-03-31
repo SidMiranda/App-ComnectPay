@@ -17,49 +17,7 @@ import java.nio.charset.StandardCharsets;
 public class AppDefault {
     static int statusPedido;
     static String numPedido;
-
-    public static Intent goToScope(String valor, String fp, String atr){
-        Intent i = new Intent();
-        String mth = "br.com.oki.scope." + fp;
-        i.setAction(mth);
-        i.putExtra("VALOR", valor);
-        i.putExtra("QTD_MAX_PARCELA", "3");
-        i.putExtra("CONSULTA_PLANOS", "0");
-        i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
-
-        if(atr != "") {
-            Log.e("ServicePay", "setando ATRIB_APLICACAO TO " + setAtr());
-            i.putExtra("ATRIB_APLICACAO", setAtr());
-        }
-
-        return i;
-    }
-
-    public static String setAtr(){
-        String atr;
-
-        //FORMATO
-        //nnc1tt1xx..x1c2tt2xx..x2cnttnxx..xn
-
-        /* REFERENCIA
-        nn = quantidade de atributos (tamanho 2)
-        c1 = código do atributo 1 (tamanho 2)
-        tt1 = tamanho do atributo 1 (tamanho 3)
-        xx..x1 = atributo 1 (tamanho tt1)
-        ...
-        c2 = código do atributo 2 (tamanho 2)
-        tt2 = tamanho do atributo 2 (tamanho 3)
-        xx..x2 = atributo 2 (tamanho tt2)
-        ...
-        cn = código do atributo n (tamanho 2)
-        ttn = tamanho do atributo n (tamanho 3)
-        xx..xn = atributo n (tamanho ttn)
-        */
-
-        atr = "0101003666";
-
-        return atr;
-    }
+    static String codControle;
 
     public static String getJSONFromAPI(String url){
         String retorno = "";
@@ -96,7 +54,7 @@ public class AppDefault {
         return retorno;
     }
 
-    public static String putJSONFromAPI(String url, int statusPedido, String numPedido){
+    public static String putJSONFromAPI(String url, int statusPedido, String numPedido, String controle){
         String retorno = "";
         String st = "";
 
@@ -108,7 +66,7 @@ public class AppDefault {
             st = "concluido";
         }
 
-        String urlParams = "numero=" + numPedido + "&status=" + st;
+        String urlParams = "numero=" + numPedido + "&status=" + st + "&controle=" + controle;
 
         try {
             URL apiEnd = new URL(url);
@@ -170,9 +128,10 @@ public class AppDefault {
         return buffer.toString();
     }
 
-    public static void setStatus(int status, String pedido){
+    public static void setStatus(int status, String pedido, String controle){
         statusPedido = status;
         numPedido = pedido;
+        codControle = controle;
         updateList();
     }
 
@@ -188,7 +147,7 @@ public class AppDefault {
 
         @Override
         protected String doInBackground(Void... params) {
-            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido);
+            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido, codControle);
         }
 
         @Override
