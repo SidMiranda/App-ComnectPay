@@ -1,16 +1,21 @@
 package br.com.comnect.comnectpay105;
 
+import static br.com.comnect.comnectpay105.AppDefault.setStatus;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+
 public class ValueKeyboardActivity extends AppCompatActivity {
-    String valor = "";
+    String valor = "", from;
     Button key1, key2, key3, key4, key5, key6, key7, key8, key9, key0;
     Button btn_pagar, btn_corrige;
     TextView txt_valor;
@@ -35,13 +40,11 @@ public class ValueKeyboardActivity extends AppCompatActivity {
         txt_valor = findViewById(R.id.txt_valor);
 
         Intent i = getIntent();
-        String from = i.getStringExtra("FROM");
+        from = i.getStringExtra("FROM");
 
         btn_pagar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                goTo(from);
-            }
+            public void onClick(View view) {goTo(from);}
         });
 
         key1.setOnClickListener(new View.OnClickListener() {
@@ -137,23 +140,30 @@ public class ValueKeyboardActivity extends AppCompatActivity {
         if(Integer.parseInt(valor) > 0){
             switch(from) {
                 case "pix":
+                    Log.e("ServicePay", "Redirecting to PIX");
                     i = new Intent(ValueKeyboardActivity.this, PixActivity.class);
                     break;
                 case "bitcoin":
                     Toast.makeText(this, from, Toast.LENGTH_SHORT).show();
                     break;
                 case "pagar":
+                    Log.e("ServicePay", "Passing value to CardTypeActivity " + valor + " from: " + from);
                     i = new Intent(ValueKeyboardActivity.this, CardTypeActivity.class);
                     break;
                 default:
                     finish();
             }
 
-            i.putExtra("VALUE", valor);
-            startActivity(i);
+            i.putExtra("VALOR", valor);
+            startActivityForResult(i, 100);
 
         }else{
             Toast.makeText(this, "Digite um valor", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 }

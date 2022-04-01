@@ -21,15 +21,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 import br.com.comnect.comnectpay105.CallScopePay;
 import br.com.comnect.comnectpay105.EstornoActivity;
-import br.com.comnect.comnectpay105.PayActivity;
 import br.com.comnect.comnectpay105.R;
 import br.com.comnect.comnectpay105.ValueKeyboardActivity;
 import br.com.comnect.comnectpay105.databinding.FragmentHomeBinding;
-import br.com.comnect.comnectpay105.startPaymentService;
+import br.com.comnect.comnectpay105.routes;
 
 public class HomeFragment extends Fragment{
     Button btn_pagar, btn_recarga, btn_cupom, btn_pix, btn_extorno, btn_btc;
@@ -110,7 +107,7 @@ public class HomeFragment extends Fragment{
 
         @Override
         protected String doInBackground(Void... params) {
-            return getJSONFromAPI("http://192.168.20.152/API/get-pendentes.php?pdv=" + pdv);
+            return getJSONFromAPI(routes.getPendentes + "?pdv=" + pdv);
         }
 
         @Override
@@ -123,6 +120,7 @@ public class HomeFragment extends Fragment{
         String jsonS = list;
         JSONObject obj = null;
 
+        Log.e("ServicePay", "Verificando pagamentos pendentes");
         try {
             obj = new JSONObject(jsonS);
             JSONArray pedidos = obj.getJSONArray("result");
@@ -137,8 +135,9 @@ public class HomeFragment extends Fragment{
                 setStatus(2, numPedido, "0");
                 callScope();
             }else{
-                Log.e("ServicePay", "Redirecting to PayActivity");
-                Intent i = new Intent(getActivity(), PayActivity.class);
+                Log.e("ServicePay", "Redirecting to ValueKeyboardActivity");
+                Intent i = new Intent(getContext(), ValueKeyboardActivity.class);
+                i.putExtra("FROM", "pagar");
                 startActivity(i);
             }
 
@@ -147,9 +146,9 @@ public class HomeFragment extends Fragment{
         }
 
     }
+
     private void callScope(){
-        Intent i = new Intent(getActivity(), CallScopePay.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Intent i = new Intent(getContext(), CallScopePay.class);
         i.putExtra("VALOR", valor);
         i.putExtra("PEDIDO", numPedido);
         i.putExtra("ACTION", fp);

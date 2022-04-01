@@ -66,7 +66,6 @@ public class CallScopePay extends AppCompatActivity {
         i.putExtra("APP_TEMA", "APP_TEMA_AZUL");
 
         Log.e("ServicePay", "waiting for result..");
-
         startActivityForResult(i, 100);
     }
 

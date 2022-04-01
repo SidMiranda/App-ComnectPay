@@ -146,8 +146,9 @@ public class AppDefault {
 
         @Override
         protected String doInBackground(Void... params) {
-            Log.e("ServicePay", "Sending request to API pedido:" + numPedido + " status:" + statusPedido + " controle:" + codControle );
-            return putJSONFromAPI("http://192.168.20.152/API/update-status.php", statusPedido, numPedido, codControle);
+            Log.e("ServicePay", "Sending request to API pedido:" + numPedido +
+                    " status:" + statusPedido + " controle:" + codControle );
+            return putJSONFromAPI(routes.updateStatus, statusPedido, numPedido, codControle);
         }
 
         @Override
