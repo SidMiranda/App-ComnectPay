@@ -2,6 +2,9 @@ package br.com.comnect.comnectpay105;
 
 public class routes {
 
-    public static String getPendentes = "http://192.168.20.152/API/get-pendentes.php";
-    public static String updateStatus = "http://192.168.20.152/API/update-status.php";
+    private static String url = "http://192.168.20.152/";
+
+    public static String getPendentes = url + "API/get-pendentes.php";
+    public static String updateStatus = url + "API/update-status.php";
+    public static String postTransaction = url + "SCOPE/post-transaction.php";
 }

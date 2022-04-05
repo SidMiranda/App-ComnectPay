@@ -23,11 +23,10 @@ public class PixActivity extends AppCompatActivity {
         txt_value = findViewById(R.id.txt_value);
 
         Intent i = getIntent();
-        String valor = i.getStringExtra("VALUE");
-        String valorFormatado = valor.replace(",", "");
+        String valor = i.getStringExtra("VALOR");
 
-        if(Integer.parseInt(valorFormatado) > 0){
-            txt_value.setText("R$ " + valor);
+        if(Integer.parseInt(valor) > 0){
+            txt_value.setText("R$ " + valor.substring(0, (valor.length() - 2)) + "," + valor.substring(valor.length() - 2));
         }else{
             txt_value.setText("R$ 0,00");
         }

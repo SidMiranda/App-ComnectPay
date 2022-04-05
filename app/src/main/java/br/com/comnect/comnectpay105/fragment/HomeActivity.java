@@ -1,6 +1,7 @@
 package br.com.comnect.comnectpay105.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -38,6 +39,9 @@ public class HomeActivity extends AppCompatActivity {
         Intent serviceIntent = new Intent(this, startPaymentService.class);
         Log.e("ServicePay", "Starting Service CONSULTA_API");
         startService(serviceIntent);
+
+        String serial = Build.SERIAL;
+        Log.e("ServicePay", "Serial -> " + serial);
 
     }
 

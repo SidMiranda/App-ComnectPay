@@ -29,7 +29,7 @@ public class CardNumberActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String cardNumber = edt_4n.getText().toString();
                 Intent i = new Intent(CardNumberActivity.this, EstornoActivity.class);
-                i.putExtra("NUMERO_CARTAO", edt_4n.getText().toString());
+                i.putExtra("NUMERO_CARTAO", cardNumber);
                 startActivity(i);
             }
         });

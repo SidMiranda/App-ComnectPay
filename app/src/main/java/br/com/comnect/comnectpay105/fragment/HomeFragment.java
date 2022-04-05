@@ -135,10 +135,7 @@ public class HomeFragment extends Fragment{
                 setStatus(2, numPedido, "0");
                 callScope();
             }else{
-                Log.e("ServicePay", "Redirecting to ValueKeyboardActivity");
-                Intent i = new Intent(getContext(), ValueKeyboardActivity.class);
-                i.putExtra("FROM", "pagar");
-                startActivity(i);
+                goToKeyboard("pagar");
             }
 
         } catch (JSONException e) {
@@ -159,7 +156,8 @@ public class HomeFragment extends Fragment{
     }
 
     public void goToKeyboard(String from){
-        Intent i = new Intent(getActivity(), ValueKeyboardActivity.class);
+        Log.e("ServicePay", "Redirecting to ValueKeyboardActivity -> " + from);
+        Intent i = new Intent(getContext(), ValueKeyboardActivity.class);
         i.putExtra("FROM", from);
         startActivity(i);
     }

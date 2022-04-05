@@ -88,10 +88,12 @@ public class EstornoActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            if(cardNumber == "0") {
-                return getJSONFromAPI("http://192.168.20.152/SCOPE/post-transaction.php");
+            if(cardNumber == null) {
+                Log.e("ServicePay", "Loading ALL 6 last payments");
+                return getJSONFromAPI(routes.postTransaction);
             }else{
-                return getJSONFromAPI("http://192.168.20.152/SCOPE/post-transaction.php?cardNumber=" + cardNumber);
+                Log.e("ServicePay", "Loading card " + cardNumber + " payments");
+                return getJSONFromAPI(routes.postTransaction + "?cardNumber=" + cardNumber);
             }
         }
 

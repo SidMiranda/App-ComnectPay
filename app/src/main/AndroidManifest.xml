@@ -3,6 +3,7 @@
     package="br.com.comnect.comnectpay105">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -28,9 +29,6 @@
             android:exported="false"
             android:label="@string/title_activity_card_type"
             android:theme="@style/Theme.Comnectpay105.NoActionBar" />
-        <activity
-            android:name=".PayActivity"
-            android:exported="false" />
         <activity
             android:name=".PixActivity"
             android:exported="false" />

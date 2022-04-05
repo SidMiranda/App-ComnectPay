@@ -100,6 +100,10 @@ public class ValueKeyboardActivity extends AppCompatActivity {
     }
 
     public void addValor(String n){
+        if(n == "0" && valor.length() == 0){
+            return;
+        }
+
         valor = valor + n;
 
         switch(valor.length()){
@@ -140,14 +144,12 @@ public class ValueKeyboardActivity extends AppCompatActivity {
         if(Integer.parseInt(valor) > 0){
             switch(from) {
                 case "pix":
-                    Log.e("ServicePay", "Redirecting to PIX");
                     i = new Intent(ValueKeyboardActivity.this, PixActivity.class);
                     break;
                 case "bitcoin":
-                    Toast.makeText(this, from, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ValueKeyboardActivity.this, from, Toast.LENGTH_SHORT).show();
                     break;
                 case "pagar":
-                    Log.e("ServicePay", "Passing value to CardTypeActivity " + valor + " from: " + from);
                     i = new Intent(ValueKeyboardActivity.this, CardTypeActivity.class);
                     break;
                 default:
