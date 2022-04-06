@@ -3,8 +3,8 @@
     package="br.com.comnect.comnectpay105">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.NFC" />
 
     <application
@@ -14,6 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Comnectpay105">
+        <activity
+            android:name=".TesteImpressora"
+            android:exported="false" />
         <activity
             android:name=".CardNumberActivity"
             android:exported="false" />
@@ -51,7 +54,7 @@
 
         <service
             android:name=".startPaymentService"
-            android:exported="false"></service>
+            android:exported="false" />
     </application>
 
 </manifest>

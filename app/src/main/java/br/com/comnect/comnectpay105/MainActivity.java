@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String G700 = "GPOS700";
     private static final String version = "v1.0.0";
-
     public static String Model = Build.MODEL;
 
     @Override

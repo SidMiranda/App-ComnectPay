@@ -1,7 +1,6 @@
-package br.com.comnect.comnectpay105.impressora;
+package br.com.comnect.comnectpay105;
 
 public class ConfigPrint {
-
     private String fonte = "NORMAL";
     private String alinhamento;
     private int     tamanho;

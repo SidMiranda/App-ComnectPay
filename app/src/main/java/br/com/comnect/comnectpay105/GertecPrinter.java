@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105.impressora;
+package br.com.comnect.comnectpay105;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,14 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.os.Build;
 
+/*import com.gertec.exemplosgertec.MainActivity;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
+import com.journeyapps.barcodescanner.BarcodeEncoder;*/
 
-import br.com.comnect.comnectpay105.MainActivity;
 import br.com.gertec.gedi.GEDI;
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_Alignment;
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_BarCodeType;
@@ -65,10 +66,10 @@ public class GertecPrinter {
      * @param a = Activity  atual que esta sendo inicializada a class
      *
     public GertecPrinter(Activity a) {
-        this.activity = a;
-        startIGEDI(a);
+    this.activity = a;
+    startIGEDI(a);
     }
-    */
+     */
 
     /**
      * Método que instância a classe GEDI da lib deve ser usado apenas para o GPOS 700
@@ -99,18 +100,18 @@ public class GertecPrinter {
      *            Não alterar...
      *
     private void startIGEDI(Activity a) {
-        new Thread(() -> {
-            iGedi = new Gedi(a);
-            this.iGedi = GEDI.getInstance(a);
-            this.iPrint = this.iGedi.getPRNTR();
-            try {
-                new Thread().sleep(250);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+    new Thread(() -> {
+    iGedi = new Gedi(a);
+    this.iGedi = GEDI.getInstance(a);
+    this.iPrint = this.iGedi.getPRNTR();
+    try {
+    new Thread().sleep(250);
+    } catch (InterruptedException e) {
+    e.printStackTrace();
     }
-    */
+    }).start();
+    }
+     */
 
     /**
      * Método que recebe a configuração para ser usada na impressão
@@ -409,7 +410,7 @@ public class GertecPrinter {
 
             if(MainActivity.Model.equals(MainActivity.G700)){
                 id = context.getResources().getIdentifier(imagem,"drawable",
-                    context.getPackageName());
+                        context.getPackageName());
                 bmp = BitmapFactory.decodeResource(context.getResources(),id);
             }else{
                 id = this.activity.getApplicationContext().getResources().getIdentifier(
@@ -481,7 +482,7 @@ public class GertecPrinter {
      * @throws GediException = retorna o código do erro.
      *
      * */
-    public boolean imprimeBarCodeIMG( String texto, int height, int width,  String barCodeType ) throws GediException, WriterException {
+    /*public boolean imprimeBarCodeIMG( String texto, int height, int width,  String barCodeType ) throws GediException, WriterException {
 
         try {
 
@@ -511,7 +512,7 @@ public class GertecPrinter {
             throw new WriterException(e);
         }
 
-    }
+    }*/
 
     /**
      * Método que faz o avanço de linhas após uma impressão.
@@ -530,7 +531,7 @@ public class GertecPrinter {
                 this.iPrint.DrawBlankLine(linhas);
             }
         } catch (GediException e) {
-           throw new GediException(e.getErrorCode());
+            throw new GediException(e.getErrorCode());
         }
     }
 
