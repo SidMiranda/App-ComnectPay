@@ -1,6 +1,8 @@
 package br.com.comnect.comnectpay105;
 
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
+import static br.com.comnect.comnectpay105.routes.getPendentes;
+
 import android.app.Service;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -58,7 +60,7 @@ public class startPaymentService extends Service {
 
         @Override
         protected String doInBackground(Void... params) {
-            return getJSONFromAPI("http://192.168.20.152/API/get-pendentes.php?pdv=" + pdv);
+            return getJSONFromAPI(getPendentes + "?pdv=" + pdv);
         }
 
         @Override
@@ -94,7 +96,7 @@ public class startPaymentService extends Service {
         i.putExtra("VALOR", valor);
         i.putExtra("PEDIDO", pedido);
         i.putExtra("ACTION", fp);
-        i.putExtra("ATRIB_APLICACAO", "");
+        i.putExtra("ATRIB_APLICACAO", "01010042022");
         i.putExtra("QTD_MAX_PARCELA", "1");
 
         startActivity(i);

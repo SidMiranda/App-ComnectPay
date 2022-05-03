@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import br.com.comnect.comnectpay105.CallScopePay;
 import br.com.comnect.comnectpay105.EstornoActivity;
 import br.com.comnect.comnectpay105.R;
-import br.com.comnect.comnectpay105.TesteImpressora;
+import br.com.comnect.comnectpay105.ImpressaoActivity;
 import br.com.comnect.comnectpay105.ValueKeyboardActivity;
 import br.com.comnect.comnectpay105.databinding.FragmentHomeBinding;
 import br.com.comnect.comnectpay105.routes;
@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment{
     }
     public void impressaoCupom(){
         Toast.makeText(getActivity(), "Imprimindo Cupom...", Toast.LENGTH_SHORT).show();
-        Intent i = new Intent(getContext(), TesteImpressora.class);
+        Intent i = new Intent(getContext(), ImpressaoActivity.class);
         //i.setAction("br.com.oki.scope.REIMPRESSAO_CUPOM");
         //i.putExtra("CODIGO_CONTROLE", "03900731022");
         startActivity(i);

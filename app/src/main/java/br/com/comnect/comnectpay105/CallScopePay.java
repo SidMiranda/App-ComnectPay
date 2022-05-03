@@ -81,6 +81,17 @@ public class CallScopePay extends AppCompatActivity {
                 HashMap<String, Object> map = (HashMap) data.getExtras().get("DADOS_TRANSACAO");
                 Log.e("ServicePay", "result with data ok");
                 if (Integer.parseInt(map.get("VALOR_TRANSACAO").toString()) > 0) {
+
+                    Intent i = new Intent(this, ImpressaoActivity.class);
+                    i.putExtra("CODIGO_CONTROLE", map.get("CODIGO_CONTROLE").toString());
+                    i.putExtra("CNPJ", map.get("DADOS_CNPJ_REDE_SAT").toString());
+                    i.putExtra("CODIGO_AUTH", map.get("CODIGO_AUTORIZACAO").toString());
+                    i.putExtra("VALOR", map.get("VALOR_TRANSACAO").toString());
+                    i.putExtra("BANDEIRA", map.get("NOME_BANDEIRA").toString());
+                    i.putExtra("CARTAO", map.get("NUMERO_CARTAO").toString());
+                    i.putExtra("DATA", map.get("DATA_LOCAL_TRANSACAO").toString() + " " + map.get("HORA_LOCAL_TRANSACAO").toString());
+                    startActivity(i);
+
                     Log.e("ServicePay", "CODIGO DE CONTROLE -> " + map.get("CODIGO_CONTROLE").toString());
                     setStatus(3, numPedido, map.get("CODIGO_CONTROLE").toString());
                     Toast.makeText(this,  action + " OK!", Toast.LENGTH_SHORT).show();

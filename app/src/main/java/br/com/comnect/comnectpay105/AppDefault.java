@@ -1,7 +1,18 @@
 package br.com.comnect.comnectpay105;
 
+import static java.security.AccessController.getContext;
+
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -17,6 +28,8 @@ public class AppDefault {
     static int statusPedido;
     static String numPedido;
     static String codControle;
+    private static GertecPrinter gertecPrinter;
+    private static ConfigPrint configPrint = new ConfigPrint();
 
     public static String getJSONFromAPI(String url){
         String retorno = "";
@@ -156,5 +169,25 @@ public class AppDefault {
             startPaymentService.aux = 0;
             Log.e("ServicePay", "starting service");
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    public static void imprime(Context c, String txt) throws Exception {
+
+        Toast.makeText(c, txt, Toast.LENGTH_SHORT).show();
+
+        //if(MainActivity.Model.equals(MainActivity.G700)){
+            gertecPrinter = new GertecPrinter(c);
+        //}
+        configPrint.setAlinhamento("CENTER");
+        gertecPrinter.setConfigImpressao(configPrint);
+
+        String sStatus = gertecPrinter.getStatusImpressora();
+        if(gertecPrinter.isImpressoraOK()) {
+            gertecPrinter.imprimeTexto(txt);
+            gertecPrinter.avancaLinha(150);
+            gertecPrinter.ImpressoraOutput();
+        }
+
     }
 }
