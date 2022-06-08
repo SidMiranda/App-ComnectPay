@@ -45,6 +45,12 @@ public class ImpressaoActivity extends AppCompatActivity {
             gertecPrinter = new GertecPrinter(ImpressaoActivity.this);
         }
 
+        try {
+            firstPrint();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         btnViaCliente.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,6 +74,11 @@ public class ImpressaoActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void firstPrint() throws Exception {
+        montaCupom();
+        output();
     }
 
     private void montaCupom() throws Exception {

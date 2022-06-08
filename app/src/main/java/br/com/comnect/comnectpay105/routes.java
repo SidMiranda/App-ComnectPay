@@ -7,4 +7,5 @@ public class routes {
     public static String getPendentes = url + "API/get-pendentes.php";
     public static String updateStatus = url + "API/update-status.php";
     public static String postTransaction = url + "SCOPE/post-transaction.php";
+    public static String getPdvConfig = url + "";
 }

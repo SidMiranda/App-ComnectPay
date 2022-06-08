@@ -25,7 +25,6 @@
 
         </TextView>
 
-
         <TextView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -46,10 +45,8 @@
         android:layout_height="40dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/rounded_corner"
-
         app:icon="@drawable/ic_action_cupom"
         app:iconSize="20dp">
-
     </Button>
 
     <Button
@@ -60,8 +57,16 @@
         app:icon="@drawable/ic_action_card"
         app:iconGravity="start"
         app:iconSize="20dp">
+    </Button>
 
-
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginRight="10dp"
+        app:iconGravity=""
+        android:background="@drawable/rounded_corner"
+        android:text="X">
     </Button>-->
 
     <TextView
@@ -76,6 +81,5 @@
         android:id="@+id/pedidos_pendentes_valor">
 
     </TextView>
-
 
 </LinearLayout>

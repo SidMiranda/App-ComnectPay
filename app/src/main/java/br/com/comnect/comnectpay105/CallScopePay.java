@@ -50,15 +50,16 @@ public class CallScopePay extends AppCompatActivity {
         i.setAction(mth);
 
         i.putExtra("VALOR", valor);
+        Log.e("ServicePay", "sending value -> " + valor);
 
         if(qtd_parcela != null)
             i.putExtra("QTD_MAX_PARCELA", qtd_parcela);
 
         // exemplo 02 01 014 (11) 6097-1234 02 006 123456
-        atr = "01010042022";
+        /*atr = "01010042022";
 
         if(atr != null)
-            i.putExtra("ATRIB_APLICACAO", atr);
+            i.putExtra("ATRIB_APLICACAO", atr);*/
 
         if(codControle != null)
             i.putExtra("CODIGO_CONTROLE", codControle);
@@ -107,7 +108,7 @@ public class CallScopePay extends AppCompatActivity {
         } else {
             setStatus(1, numPedido, "0");
             Toast.makeText(this, "Erro ao processar o pagamento!", Toast.LENGTH_SHORT).show();
-            Log.e("ServicePay", "result erro out..");
+            Log.e("ServicePay", "result erro out.. -> " + resultCode);
             finish();
         }
     }

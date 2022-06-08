@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Comnectpay105">
         <activity
+            android:name=".InitialConfig"
+            android:exported="false" />
+        <activity
             android:name=".ImpressaoActivity"
             android:exported="false" />
         <activity

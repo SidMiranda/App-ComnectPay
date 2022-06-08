@@ -47,6 +47,7 @@ public class DashboardFragment extends Fragment {
 
         lv_pedidos = rootView.findViewById(R.id.lv_pedidos);
         btn_refresh = rootView.findViewById(R.id.btn_refresh);
+        //btn_delete = rootView.findViewById(R.id.btn_delete);
 
         refreshList();
 
@@ -63,6 +64,10 @@ public class DashboardFragment extends Fragment {
     public void refreshList(){
         GetJson list = new GetJson();
         list.execute();
+    }
+
+    public void deleteItem(){
+        Toast.makeText(getContext(), "Deletando item...", Toast.LENGTH_SHORT).show();
     }
     private class GetJson extends AsyncTask<Void, Void, String> {
         @Override
@@ -125,6 +130,13 @@ public class DashboardFragment extends Fragment {
                     }
 
                 });
+
+                /*btn_delete.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        deleteItem();
+                    }
+                });*/
             }
 
             SimpleAdapter adaptador = new SimpleAdapter(getActivity(), arrayList, R.layout.pedidos_pendentes, fromList, toList);

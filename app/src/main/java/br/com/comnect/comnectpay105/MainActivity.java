@@ -26,9 +26,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity.this, HomeActivity.class);
-                Log.e("ServicePay", "Loading HomeActivity");
-                startActivity(i);
+
+                CheckPdvConfiguration config = new CheckPdvConfiguration(Model);
+                int ini = config.getConfig();
+
+                if(ini == 1) {
+                    Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                    Log.e("ServicePay", "Loading HomeActivity");
+                    startActivity(i);
+                }else{
+                    Intent i = new Intent(MainActivity.this, InitialConfig.class);
+                    Log.e("ServicePay", "Loading InitialCOnfig");
+                    startActivity(i);
+                }
 
                 finish();
             }
