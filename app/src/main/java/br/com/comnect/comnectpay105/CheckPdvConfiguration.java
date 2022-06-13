@@ -3,6 +3,7 @@ package br.com.comnect.comnectpay105;
 import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
 
 import android.os.AsyncTask;
+import android.os.Build;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,18 +11,9 @@ import org.json.JSONObject;
 
 public class CheckPdvConfiguration {
 
-    private static String Model;
     private int config = 0;
 
-    public CheckPdvConfiguration(String Model){
-        this.Model = Model;
-    }
-
-    public int getConfig(){
-        return checkFromWebService(Model);
-    }
-
-    public int checkFromWebService(String Model){
+    public int checkFromWebService(){
 
         GetJson list = new GetJson();
         list.execute();
@@ -35,7 +27,7 @@ public class CheckPdvConfiguration {
 
         @Override
         protected String doInBackground(Void... params) {
-            return getJSONFromAPI(routes.getPdvConfig + Model);
+            return getJSONFromAPI(routes.getPdvConfig + Build.SERIAL);
         }
 
         @Override

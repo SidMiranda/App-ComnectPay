@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                CheckPdvConfiguration config = new CheckPdvConfiguration(Model);
-                int ini = config.getConfig();
+                CheckPdvConfiguration config = new CheckPdvConfiguration();
+                int ini = config.checkFromWebService();
 
                 if(ini == 1) {
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(i);
                 }else{
                     Intent i = new Intent(MainActivity.this, InitialConfig.class);
-                    Log.e("ServicePay", "Loading InitialCOnfig");
+                    Log.e("ServicePay", "Loading InitialConfig");
                     startActivity(i);
                 }
 

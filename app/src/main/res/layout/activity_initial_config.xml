@@ -10,24 +10,39 @@
     tools:context=".InitialConfig">
 
     <TextView
+        android:id="@+id/txt_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="POS não configurado"
-        android:textSize="30dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="60dp"
-        android:gravity="center">
+        android:layout_marginBottom="30dp"
+        android:gravity="center"
+        android:text="POS não configurado"
+        android:textSize="30dp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/txt_serial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="0000000000000000"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:visibility="gone">
 
     </TextView>
 
     <Button
+        android:id="@+id/btn_init"
+        style="@style/btnlook"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:padding="20dp"
-        android:textSize="36dp"
         android:text="INICIAR"
-        style="@style/btnlook"
-        >
+        android:textSize="36dp">
 
     </Button>
 
