@@ -11,7 +11,7 @@ import org.json.JSONObject;
 
 public class CheckPdvConfiguration {
 
-    private int config = 0;
+    private int config = 1;
 
     public int checkFromWebService(){
 

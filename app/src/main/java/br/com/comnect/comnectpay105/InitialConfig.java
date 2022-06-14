@@ -8,10 +8,13 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
 
 public class InitialConfig extends AppCompatActivity {
 
@@ -43,7 +46,13 @@ public class InitialConfig extends AppCompatActivity {
                 msg.setTextSize(20);
                 msg.setText("Acesse portal.comnect.com.br e configure um novo terminal com o seguinte numero de série:");
 
-                Toast.makeText(InitialConfig.this, "Iniciando configuração...", Toast.LENGTH_SHORT).show();
+                ScopeIni ini = new ScopeIni();
+                try {
+                    Log.e("ServicePay", ini.teste());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 
