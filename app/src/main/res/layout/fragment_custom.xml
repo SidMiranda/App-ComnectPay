@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/purple_700"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                app:srcCompat="@drawable/foto">
+
+            </ImageView>
+
+            <TextView
+                android:layout_width="260dp"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="Olá,\n@Sidney Miranda"
+                >
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    android:text="Icon ">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text=" Icon">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:background="@color/purple_500"
+            android:layout_height="1dp"
+            android:layout_margin="10dp">
+        </View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="16dp"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    android:text="ComnectPay"
+                    >
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="R$ 2.156,29"
+                    >
+
+                </TextView>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:layout_width="230dp"
+                    android:layout_height="match_parent"
+                    style="@style/btnlook"
+                    android:text="Consultar Extrato"
+                    android:layout_marginLeft="50dp">
+
+                </Button>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="100dp"
+                android:layout_margin="5dp"
+                android:textSize="13dp"
+                android:layout_height="100dp"
+                android:gravity="bottom"
+                android:text="QR Code">
+            </Button>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:text="PIX"
+                android:gravity="bottom"
+                android:textSize="13dp"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:layout_margin="5dp">
+            </Button>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:textSize="13dp"
+                android:text="Boleto"
+                android:gravity="bottom"
+                android:layout_margin="5dp">
+            </Button>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:textSize="13dp"
+                android:text="Cobrar"
+                android:gravity="bottom"
+                android:layout_margin="5dp">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+</LinearLayout>
