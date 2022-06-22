@@ -1,27 +1,22 @@
 package br.com.comnect.comnectpay105;
 
-import static java.security.AccessController.getContext;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 public class AppDefault {
@@ -43,6 +38,113 @@ public class AppDefault {
             conexao.setRequestMethod("GET");
             conexao.setReadTimeout(15000);
             conexao.setConnectTimeout(15000);
+            conexao.connect();
+
+            codigoResposta = conexao.getResponseCode();
+            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
+                is = conexao.getInputStream();
+            }else{
+                is = conexao.getErrorStream();
+            }
+
+            retorno = converterInputStreamToString(is);
+
+            is.close();
+            conexao.disconnect();
+
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return retorno;
+    }
+
+    public static String getJSONFromPortal(String url){
+        String retorno = "";
+        try {
+            URL apiEnd = new URL(url);
+            int codigoResposta;
+            HttpURLConnection conexao;
+            conexao = (HttpURLConnection) apiEnd.openConnection();
+            InputStream is;
+
+            conexao.setRequestProperty("Request-Method", "POST");
+            conexao.setDoInput(true);
+            conexao.setDoOutput(true);
+
+            String parametros = URLEncoder.encode("DATA", "UTF-8") + "=" +
+                    URLEncoder.encode("{'m':'get_settings','u':'14013'}", "UTF-8");
+
+
+
+            OutputStreamWriter writer = new OutputStreamWriter(conexao.getOutputStream(), "iso-8859-1");
+
+            writer.write(parametros);
+
+            //conexao.setRequestMethod("POST");
+
+            conexao.setReadTimeout(15000);
+            conexao.setConnectTimeout(15000);
+            conexao.connect();
+
+            codigoResposta = conexao.getResponseCode();
+            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
+                is = conexao.getInputStream();
+            }else{
+                is = conexao.getErrorStream();
+            }
+
+            retorno = converterInputStreamToString(is);
+
+            is.close();
+            conexao.disconnect();
+
+        }catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return retorno;
+    }
+
+    public static String postJSONFromPortal(String url){
+        String retorno = "";
+        //String urlParams = "data:{'m':'get_settings','u':'14013'}";
+
+        Log.e("ServicePay", "init of try...");
+
+        try {
+            URL apiEnd = new URL(url);
+            int codigoResposta;
+            HttpURLConnection conexao;
+            InputStream is;
+
+            String urlParams = URLEncoder.encode("DATA", "UTF-8") + "=" +
+                    URLEncoder.encode("{'m':'get_settings','u':'14013'}", "UTF-8");
+
+            Log.e("ServicePay", "sending parans -> " + urlParams);
+
+            byte[] postData = urlParams.getBytes(StandardCharsets.UTF_8);
+
+            conexao = (HttpURLConnection) apiEnd.openConnection();
+            conexao.setDoOutput( true );
+            conexao.setInstanceFollowRedirects( false );
+            conexao.setRequestMethod( "POST" );
+            conexao.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
+            conexao.setRequestProperty( "charset", "utf-8");
+            //conexao.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
+            conexao.setUseCaches( false );
+
+            DataOutputStream out = new DataOutputStream(conexao.getOutputStream());
+            out.write((postData));
+
+            conexao.setReadTimeout(15000);
+            conexao.setConnectTimeout(15000);
+
+            Log.e("ServicePay", "abrindo conexão em 3, 2, 1...");
             conexao.connect();
 
             codigoResposta = conexao.getResponseCode();

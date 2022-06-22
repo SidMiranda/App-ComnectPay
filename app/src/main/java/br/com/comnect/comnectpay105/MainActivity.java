@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                CheckPdvConfiguration config = new CheckPdvConfiguration();
-                int ini = config.checkFromWebService();
+                GetSettingsPortal gs = new GetSettingsPortal();
+                int ini = gs.checkFromWebService();
 
                 if(ini == 1) {
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
