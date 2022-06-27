@@ -27,16 +27,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                GetSettingsPortal gs = new GetSettingsPortal();
-                int ini = gs.checkFromWebService();
-
-                if(ini == 1) {
+                if(false) {
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     Log.e("ServicePay", "Loading HomeActivity");
                     startActivity(i);
                 }else{
                     Intent i = new Intent(MainActivity.this, InitialConfig.class);
-                    Log.e("ServicePay", "Loading InitialConfig");
+                    Log.e("ServicePay", "Loading InitialConfig -> ");
                     startActivity(i);
                 }
 

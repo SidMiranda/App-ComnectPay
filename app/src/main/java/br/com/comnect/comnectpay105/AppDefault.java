@@ -61,60 +61,11 @@ public class AppDefault {
         return retorno;
     }
 
-    public static String getJSONFromPortal(String url){
-        String retorno = "";
-        try {
-            URL apiEnd = new URL(url);
-            int codigoResposta;
-            HttpURLConnection conexao;
-            conexao = (HttpURLConnection) apiEnd.openConnection();
-            InputStream is;
-
-            conexao.setRequestProperty("Request-Method", "POST");
-            conexao.setDoInput(true);
-            conexao.setDoOutput(true);
-
-            String parametros = URLEncoder.encode("DATA", "UTF-8") + "=" +
-                    URLEncoder.encode("{'m':'get_settings','u':'14013'}", "UTF-8");
-
-
-
-            OutputStreamWriter writer = new OutputStreamWriter(conexao.getOutputStream(), "iso-8859-1");
-
-            writer.write(parametros);
-
-            //conexao.setRequestMethod("POST");
-
-            conexao.setReadTimeout(15000);
-            conexao.setConnectTimeout(15000);
-            conexao.connect();
-
-            codigoResposta = conexao.getResponseCode();
-            if(codigoResposta < HttpURLConnection.HTTP_BAD_REQUEST){
-                is = conexao.getInputStream();
-            }else{
-                is = conexao.getErrorStream();
-            }
-
-            retorno = converterInputStreamToString(is);
-
-            is.close();
-            conexao.disconnect();
-
-        }catch (MalformedURLException e) {
-            e.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return retorno;
-    }
-
     public static String postJSONFromPortal(String url){
         String retorno = "";
-        //String urlParams = "data:{'m':'get_settings','u':'14013'}";
+        //String data = "{'m':'get_settings','u':'14013'}";
 
-        Log.e("ServicePay", "init of try...");
+        Log.e("ServicePay", "init postJSONFromPortal...");
 
         try {
             URL apiEnd = new URL(url);
@@ -122,12 +73,14 @@ public class AppDefault {
             HttpURLConnection conexao;
             InputStream is;
 
-            String urlParams = URLEncoder.encode("DATA", "UTF-8") + "=" +
-                    URLEncoder.encode("{'m':'get_settings','u':'14013'}", "UTF-8");
+            String data = URLEncoder.encode("data", "UTF-8") + "=" +
+                    URLEncoder.encode("{\"m\":\"get_settings\",\"u\":\"14013\"}", "UTF-8");
 
-            Log.e("ServicePay", "sending parans -> " + urlParams);
+            //String data2 = "data=%7B%22m%22%3A%22get_settings%22%2C%22u%22%3A%2214013%22%7D";
 
-            byte[] postData = urlParams.getBytes(StandardCharsets.UTF_8);
+            Log.e("ServicePay", "sending parans -> " + data);
+
+            byte[] postData = data.getBytes(StandardCharsets.UTF_8);
 
             conexao = (HttpURLConnection) apiEnd.openConnection();
             conexao.setDoOutput( true );
@@ -135,16 +88,16 @@ public class AppDefault {
             conexao.setRequestMethod( "POST" );
             conexao.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded");
             conexao.setRequestProperty( "charset", "utf-8");
-            //conexao.setRequestProperty( "Content-Length", Integer.toString( postDataLength ));
             conexao.setUseCaches( false );
 
-            DataOutputStream out = new DataOutputStream(conexao.getOutputStream());
-            out.write((postData));
+            try (
+                    DataOutputStream out = new DataOutputStream(conexao.getOutputStream())) {
+                    out.write((postData));
+            }
 
             conexao.setReadTimeout(15000);
             conexao.setConnectTimeout(15000);
 
-            Log.e("ServicePay", "abrindo conexão em 3, 2, 1...");
             conexao.connect();
 
             codigoResposta = conexao.getResponseCode();
@@ -155,6 +108,8 @@ public class AppDefault {
             }
 
             retorno = converterInputStreamToString(is);
+
+            Log.e("ServicePay", "Retorno -> " + retorno);
 
             is.close();
             conexao.disconnect();
