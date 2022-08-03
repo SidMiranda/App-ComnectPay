@@ -14,8 +14,10 @@ public class MainActivity extends AppCompatActivity {
     private static int SPLASH_TIME_OUT = 2000;
 
     public static final String G700 = "GPOS700";
-    private static final String version = "v1.0.0";
+    private static final String VERSION = "v1.0.0";
     public static String Model = Build.MODEL;
+    public static String Serial = Build.SERIAL;
+    //public static String Info = getINFO(); -> metodo da lib Gedi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +29,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+                Log.e("ServicePay", "loading main class");
                 if(false) {
                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
                     Log.e("ServicePay", "Loading HomeActivity");
                     startActivity(i);
                 }else{
                     Intent i = new Intent(MainActivity.this, InitialConfig.class);
-                    Log.e("ServicePay", "Loading InitialConfig -> ");
+                    Log.e("ServicePay", "Loading InitialConfig");
                     startActivity(i);
                 }
 
