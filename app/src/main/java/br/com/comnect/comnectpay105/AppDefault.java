@@ -12,12 +12,20 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+
+import javax.net.ssl.SSLHandshakeException;
 
 public class AppDefault {
     static int statusPedido;
@@ -70,7 +78,7 @@ public class AppDefault {
         try {
             URL apiEnd = new URL(url);
             int codigoResposta;
-            HttpURLConnection conexao;
+            HttpsURLConnection conexao;
             InputStream is;
 
             String data = URLEncoder.encode("data", "UTF-8") + "=" +
@@ -82,7 +90,14 @@ public class AppDefault {
 
             byte[] postData = data.getBytes(StandardCharsets.UTF_8);
 
-            conexao = (HttpURLConnection) apiEnd.openConnection();
+            SSLSocketFactory sslsf = null;
+            try {
+                sslsf = createSslSocketFactory();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            conexao = (HttpsURLConnection) apiEnd.openConnection();
             conexao.setDoOutput( true );
             conexao.setInstanceFollowRedirects( false );
             conexao.setRequestMethod( "POST" );
@@ -90,9 +105,14 @@ public class AppDefault {
             conexao.setRequestProperty( "charset", "utf-8");
             conexao.setUseCaches( false );
 
+            conexao.setSSLSocketFactory(sslsf);
+
             try (
+
                     DataOutputStream out = new DataOutputStream(conexao.getOutputStream())) {
                     out.write((postData));
+            }catch (SSLHandshakeException e){
+                Log.e("ServicePay", e.getMessage());
             }
 
             conexao.setReadTimeout(15000);
@@ -109,8 +129,6 @@ public class AppDefault {
 
             retorno = converterInputStreamToString(is);
 
-            Log.e("ServicePay", "Retorno -> " + retorno);
-
             is.close();
             conexao.disconnect();
 
@@ -121,6 +139,21 @@ public class AppDefault {
         }
 
         return retorno;
+    }
+
+    private static SSLSocketFactory createSslSocketFactory() throws Exception {
+        TrustManager[] byPassTrustManagers = new TrustManager[] { new X509TrustManager() {
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+            }
+            public void checkServerTrusted(X509Certificate[] chain, String authType) {
+            }
+        } };
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, byPassTrustManagers, new SecureRandom());
+        return sslContext.getSocketFactory();
     }
 
     public static String putJSONFromAPI(String url, int statusPedido, String numPedido, String controle){

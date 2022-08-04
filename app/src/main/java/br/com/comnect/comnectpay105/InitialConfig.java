@@ -1,6 +1,6 @@
 package br.com.comnect.comnectpay105;
 
-import static br.com.comnect.comnectpay105.AppDefault.postJSONFromPortal;
+import static br.com.comnect.comnectpay105.GetScopeIniFromPortal.getScopeIniFromPortal;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -70,23 +71,25 @@ public class InitialConfig extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Void... params) {
-            return postJSONFromPortal(routes.getSettingsPortal);
+            return getScopeIniFromPortal(routes.getSettingsPortal);
         }
 
         @Override
         protected void onPostExecute(String list){
             try {
+
                 load.dismiss();
                 Toast.makeText(InitialConfig.this, "busca OK", Toast.LENGTH_SHORT).show();
-//                JSONObject obj = new JSONObject(list);
-//                JSONObject settings = obj.getJSONObject("settings");
-//                JSONObject message = settings.getJSONObject("message");
-//
-//                String empresa = message.getString("cod_empresa");
-//                String filial = message.getString("cod_filial");
-//                String pdv = message.getString("cod_pdv");
-//
-//                msg.setText("Empresa: " + empresa + "\nFilial: " + filial + "\nPDV: " + pdv);
+                JSONObject obj = new JSONObject(list);
+                JSONObject settings = obj.getJSONObject("settings");
+                JSONObject message = settings.getJSONObject("message");
+
+                String empresa = message.getString("cod_empresa");
+                String filial = message.getString("cod_filial");
+                String pdv = message.getString("cod_pdv");
+                String ip = message.getString("tls_srv_ip");
+
+                msg.setText("Empresa: " + empresa + "\nFilial: " + filial + "\nPDV: " + pdv + "\nIP: " + ip);
 
 
             } catch (Exception e) {

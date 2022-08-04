@@ -8,5 +8,5 @@ public class routes {
     public static String updateStatus = url + "API/update-status.php";
     public static String postTransaction = url + "SCOPE/post-transaction.php";
     public static String getPdvConfig = url + "";
-    public static String getSettingsPortal = "http://update2.comnect.com.br:5022";
+    public static String getSettingsPortal = "https://update2.comnect.com.br:5022";
 }
