@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.AppInitialConfig;
 
 import android.os.Environment;
 import android.util.Log;
@@ -15,8 +15,10 @@ import java.io.Writer;
 import java.util.LinkedList;
 
 public class GenerateScopeIni {
-    public static boolean generate(int empresa, int filial, int pdv, String ip) {
+    public static boolean generate(String empresa, String filial, String pdv, String ip) {
         File logText = new File(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini");
+
+        Log.e("ServicePay", "path -> " + logText.toString());
 
         try (OutputStream os = new FileOutputStream(logText)) {
             Writer wr = new OutputStreamWriter(os);

@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.AppInitialConfig;
 
 import android.util.Log;
 
@@ -15,9 +15,9 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLHandshakeException;
 import javax.net.ssl.SSLSocketFactory;
 
-public class GetScopeIniFromPortal extends GetFromPortal{
+public class GetScopeIniFromPortal extends GetFromPortal {
 
-    public static String getScopeIniFromPortal(String url){
+    public static String getScopeIniFromPortal(String url, String pedido){
         String retorno = "";
         //String data = "{'m':'get_settings','u':'14013'}";
 
@@ -28,7 +28,7 @@ public class GetScopeIniFromPortal extends GetFromPortal{
             InputStream is;
 
             String data = URLEncoder.encode("data", "UTF-8") + "=" +
-                    URLEncoder.encode("{\"m\":\"get_settings\",\"u\":\"14013\"}", "UTF-8");
+                    URLEncoder.encode("{\"m\":\"get_settings\",\"u\":\"14036\"}", "UTF-8");
 
             byte[] postData = data.getBytes(StandardCharsets.UTF_8);
 

@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.AppInitialConfig;
 
 import java.io.BufferedReader;
 import java.io.IOException;

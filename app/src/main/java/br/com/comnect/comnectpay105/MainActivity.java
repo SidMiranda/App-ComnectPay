@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import br.com.comnect.comnectpay105.AppInitialConfig.InitialConfig;
 import br.com.comnect.comnectpay105.fragment.HomeActivity;
 
 public class MainActivity extends AppCompatActivity {
