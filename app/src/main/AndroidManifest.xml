@@ -25,27 +25,27 @@
             android:name=".AppInitialConfig.InitialConfig"
             android:exported="false" />
         <activity
-            android:name=".ImpressaoActivity"
+            android:name=".app.ImpressaoActivity"
             android:exported="false" />
         <activity
-            android:name=".CardNumberActivity"
+            android:name=".app.CardNumberActivity"
             android:exported="false" />
         <activity
-            android:name=".CallScopePay"
+            android:name=".app.CallScopePay"
             android:exported="false" />
         <activity
-            android:name=".ValueKeyboardActivity"
+            android:name=".app.ValueKeyboardActivity"
             android:exported="false" />
         <activity
-            android:name=".EstornoActivity"
+            android:name=".app.EstornoActivity"
             android:exported="false" />
         <activity
-            android:name=".CardTypeActivity"
+            android:name=".app.CardTypeActivity"
             android:exported="false"
             android:label="@string/title_activity_card_type"
             android:theme="@style/Theme.Comnectpay105.NoActionBar" />
         <activity
-            android:name=".PixActivity"
+            android:name=".app.PixActivity"
             android:exported="false" />
         <activity
             android:name=".fragment.HomeActivity"
@@ -63,7 +63,7 @@
         </activity>
 
         <service
-            android:name=".startPaymentService"
+            android:name=".app.startPaymentService"
             android:exported="false" />
     </application>
 

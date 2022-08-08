@@ -1,7 +1,7 @@
 package br.com.comnect.comnectpay105.fragment;
 
-import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.setStatus;
+import static br.com.comnect.comnectpay105.app.AppDefault.getJSONFromAPI;
+import static br.com.comnect.comnectpay105.app.AppDefault.setStatus;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -21,13 +21,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.comnect.comnectpay105.CallScopePay;
-import br.com.comnect.comnectpay105.EstornoActivity;
+import br.com.comnect.comnectpay105.app.CallScopePay;
+import br.com.comnect.comnectpay105.app.EstornoActivity;
 import br.com.comnect.comnectpay105.R;
-import br.com.comnect.comnectpay105.ImpressaoActivity;
-import br.com.comnect.comnectpay105.ValueKeyboardActivity;
+import br.com.comnect.comnectpay105.app.ImpressaoActivity;
+import br.com.comnect.comnectpay105.app.ValueKeyboardActivity;
+import br.com.comnect.comnectpay105.app.routes;
 import br.com.comnect.comnectpay105.databinding.FragmentHomeBinding;
-import br.com.comnect.comnectpay105.routes;
 
 public class CustomFragment extends Fragment{
     Button btn_pagar, btn_recarga, btn_cupom, btn_pix, btn_extorno, btn_btc;

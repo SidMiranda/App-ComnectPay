@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+
+import br.com.comnect.comnectpay105.R;
 
 public class PixActivity extends AppCompatActivity {
     Button btn_ok;

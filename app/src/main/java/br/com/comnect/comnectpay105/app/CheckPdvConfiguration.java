@@ -1,6 +1,6 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
-import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
+import static br.com.comnect.comnectpay105.app.AppDefault.getJSONFromAPI;
 
 import android.os.AsyncTask;
 import android.os.Build;

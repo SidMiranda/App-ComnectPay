@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 public class routes {
 

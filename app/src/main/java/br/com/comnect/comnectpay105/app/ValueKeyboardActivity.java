@@ -1,18 +1,15 @@
-package br.com.comnect.comnectpay105;
-
-import static br.com.comnect.comnectpay105.AppDefault.setStatus;
+package br.com.comnect.comnectpay105.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.HashMap;
+import br.com.comnect.comnectpay105.R;
 
 public class ValueKeyboardActivity extends AppCompatActivity {
     String valor = "", from;

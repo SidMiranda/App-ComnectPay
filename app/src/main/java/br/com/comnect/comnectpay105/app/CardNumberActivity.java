@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import br.com.comnect.comnectpay105.R;
 
 public class CardNumberActivity extends AppCompatActivity {
     EditText edt_6n, edt_4n;

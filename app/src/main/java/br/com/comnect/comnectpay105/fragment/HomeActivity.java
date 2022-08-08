@@ -15,7 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import br.com.comnect.comnectpay105.R;
 import br.com.comnect.comnectpay105.databinding.ActivityHomeBinding;
-import br.com.comnect.comnectpay105.startPaymentService;
+import br.com.comnect.comnectpay105.app.startPaymentService;
 
 public class HomeActivity extends AppCompatActivity {
 

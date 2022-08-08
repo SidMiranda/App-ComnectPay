@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.os.Build;
 
 /*import com.gertec.exemplosgertec.MainActivity;
 import com.google.zxing.BarcodeFormat;
@@ -15,6 +14,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;*/
 
+import br.com.comnect.comnectpay105.MainActivity;
 import br.com.gertec.gedi.GEDI;
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_Alignment;
 import br.com.gertec.gedi.enums.GEDI_PRNTR_e_BarCodeType;

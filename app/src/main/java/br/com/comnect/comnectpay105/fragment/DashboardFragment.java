@@ -1,7 +1,6 @@
 package br.com.comnect.comnectpay105.fragment;
 
-import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
-import static br.com.comnect.comnectpay105.AppDefault.putJSONFromAPI;
+import static br.com.comnect.comnectpay105.app.AppDefault.getJSONFromAPI;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,8 +25,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import br.com.comnect.comnectpay105.CallScopePay;
-import br.com.comnect.comnectpay105.CardTypeActivity;
+import br.com.comnect.comnectpay105.app.CallScopePay;
 import br.com.comnect.comnectpay105.R;
 
 public class DashboardFragment extends Fragment {

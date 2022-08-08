@@ -9,7 +9,7 @@
     android:gravity="center"
     android:orientation="vertical"
 
-    tools:context=".PixActivity">
+    tools:context=".app.PixActivity">
 
     <TextView
         android:layout_width="match_parent"

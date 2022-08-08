@@ -15,6 +15,7 @@ import java.io.Writer;
 import java.util.LinkedList;
 
 public class GenerateScopeIni {
+
     public static boolean generate(String empresa, String filial, String pdv, String ip) {
         File logText = new File(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini");
 
@@ -40,7 +41,7 @@ public class GenerateScopeIni {
         return true;
     }
 
-    public void readLine() throws IOException{
+    public LinkedList<String> readLine() throws IOException{
         BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini"));
 
         String linha;
@@ -50,5 +51,8 @@ public class GenerateScopeIni {
             linhas.add(linha);
             Log.e("ServicePay", "Reading line: " + linha);
         }
+
+        return linhas;
     }
+
 }

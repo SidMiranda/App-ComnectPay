@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import android.annotation.TargetApi;
 import android.content.Context;

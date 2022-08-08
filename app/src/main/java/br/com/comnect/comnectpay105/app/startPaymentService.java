@@ -1,7 +1,7 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
-import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
-import static br.com.comnect.comnectpay105.routes.getPendentes;
+import static br.com.comnect.comnectpay105.app.AppDefault.getJSONFromAPI;
+import static br.com.comnect.comnectpay105.app.routes.getPendentes;
 
 import android.app.Service;
 import android.content.Intent;

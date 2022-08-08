@@ -1,6 +1,6 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
-import static br.com.comnect.comnectpay105.AppDefault.getJSONFromAPI;
+import static br.com.comnect.comnectpay105.app.AppDefault.getJSONFromAPI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import br.com.comnect.comnectpay105.R;
 
 public class EstornoActivity extends AppCompatActivity {
     ListView lv_pedidos;

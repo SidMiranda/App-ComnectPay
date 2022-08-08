@@ -1,4 +1,4 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.HashMap;
-
-import br.com.gertec.gedi.exceptions.GediException;
+import br.com.comnect.comnectpay105.MainActivity;
+import br.com.comnect.comnectpay105.R;
 
 public class ImpressaoActivity extends AppCompatActivity {
     Button btnViaCliente, btnViaLoja, btnReduzido;

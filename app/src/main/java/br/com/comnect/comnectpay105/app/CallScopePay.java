@@ -1,6 +1,6 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
-import static br.com.comnect.comnectpay105.AppDefault.setStatus;
+import static br.com.comnect.comnectpay105.app.AppDefault.setStatus;
 
 import android.content.Intent;
 import android.os.Bundle;

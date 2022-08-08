@@ -1,15 +1,13 @@
-package br.com.comnect.comnectpay105;
+package br.com.comnect.comnectpay105.app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import java.util.HashMap;
+import br.com.comnect.comnectpay105.R;
 
 public class CardTypeActivity extends AppCompatActivity {
     Button btn_credito, btn_debito;
