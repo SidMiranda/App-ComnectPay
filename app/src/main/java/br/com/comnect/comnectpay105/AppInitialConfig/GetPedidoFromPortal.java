@@ -1,9 +1,12 @@
 package br.com.comnect.comnectpay105.AppInitialConfig;
 
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -11,7 +14,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -19,14 +27,6 @@ import javax.net.ssl.SSLSocketFactory;
 import br.com.comnect.comnectpay105.app.routes;
 
 public class GetPedidoFromPortal extends GetFromPortal {
-
-    //private static final String CA_KEYSTORE_TYPE = KeyStore.getDefaultType(); //"JKS";
-    //private static final String CA_KEYSTORE_PATH = "./cacert.jks";
-    //private static final String CA_KEYSTORE_PASS = "Telecom01";
-
-    //private static final String CLIENT_KEYSTORE_TYPE = "PKCS12";
-    //private static final String CLIENT_KEYSTORE_PATH = "./clientp12.pfx";
-    //private static final String CLIENT_KEYSTORE_PASS = "Telecom01";
 
     public static String getPedidoFromPortal(String serial) {
         String retorno = "";
@@ -45,25 +45,6 @@ public class GetPedidoFromPortal extends GetFromPortal {
             byte[] postData = data.getBytes(StandardCharsets.UTF_8);
 
             String key = "Telecom01";
-
-            KeyStore ks = KeyStore.getInstance("PKCS12");
-            ks.load(new FileInputStream(Environment.getExternalStorageDirectory()+"/client.crt"), key.toCharArray());
-
-            KeyStore ts = KeyStore.getInstance(KeyStore.getDefaultType());
-            ts.load(new FileInputStream(Environment.getExternalStorageDirectory()+"/ca.crt"), key.toCharArray());
-
-//            KeyManagerFactory kmf = KeyManagerFactory.getInstance("X509");
-//            kmf.init(ks, key.toCharArray());
-//            KeyManager[] km = kmf.getKeyManagers();
-//
-//            TrustManagerFactory tmf = TrustManagerFactory.getInstance("X509");
-//            tmf.init(ts);
-//
-//            SSLContext sslContext = SSLContext.getInstance("TLSv1");
-//            sslContext.init(km, tmf.getTrustManagers(), new SecureRandom());
-
-//
-//            HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
             SSLSocketFactory sslsf = null;
             try {
