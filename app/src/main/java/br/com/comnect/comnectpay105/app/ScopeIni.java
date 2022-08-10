@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class ScopeIni {
 
     public String teste() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(String.valueOf(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini")));
+        BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini"));
 
         String linha;
         LinkedList<String> linhas = new LinkedList<String>();

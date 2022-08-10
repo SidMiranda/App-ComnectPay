@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import br.com.comnect.comnectpay105.AppInitialConfig.InitialConfig;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
+                Log.e("ServicePay", "Loading initial config ");
                 Intent i = new Intent(MainActivity.this, InitialConfig.class);
                 startActivity(i);
 

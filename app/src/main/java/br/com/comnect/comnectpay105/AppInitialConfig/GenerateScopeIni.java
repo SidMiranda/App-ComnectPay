@@ -15,13 +15,17 @@ import java.io.Writer;
 import java.util.LinkedList;
 
 public class GenerateScopeIni {
+    private static final String FILE_NAME = "scope.ini";
+    private static final File PATH = Environment.getExternalStorageDirectory();
 
     public static boolean generate(String empresa, String filial, String pdv, String ip) {
-        File logText = new File(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini");
+        Log.e("ServicePay", "Status Storage ->" + Environment.getExternalStorageState());
+        Log.e("ServicePay", "PATH ->" + PATH + FILE_NAME);
+        Log.e("ServicePay", "PATH ABSOLUTE ->" + PATH.getAbsolutePath());
 
-        Log.e("ServicePay", "path -> " + logText.toString());
+        File iniFile = new File(PATH + "/" +FILE_NAME);
 
-        try (OutputStream os = new FileOutputStream(logText)) {
+        try (OutputStream os = new FileOutputStream(iniFile)){
             Writer wr = new OutputStreamWriter(os);
             BufferedWriter br = new BufferedWriter(wr);
 
@@ -31,18 +35,31 @@ public class GenerateScopeIni {
             br.newLine();
             br.write("Port=2046");
             br.newLine();
+            br.write("ArqTracePath=./");
+            br.newLine();
+            br.newLine();
+            br.write("[PINPAD]");
+            br.newLine();
+            br.write("TamMinDados=4");
             br.close();
+
+            Log.e("ServicePay", "SAVED");
         }catch (Exception e){
-            Log.e("ServicePay", e.getMessage());
+            Log.e("ServicePay", "ERR: " + e.getMessage());
             return false;
         }
 
+        try {
+            readScope();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return true;
     }
 
-    public LinkedList<String> readLine() throws IOException{
-        BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/SCOPE/scope.ini"));
+    public static String readScope() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(Environment.getExternalStorageDirectory()+"/scope.ini"));
 
         String linha;
         LinkedList<String> linhas = new LinkedList<String>();
@@ -52,7 +69,6 @@ public class GenerateScopeIni {
             Log.e("ServicePay", "Reading line: " + linha);
         }
 
-        return linhas;
+        return "finished...";
     }
-
 }

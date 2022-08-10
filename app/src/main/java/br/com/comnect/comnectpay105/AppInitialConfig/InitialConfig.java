@@ -57,7 +57,9 @@ public class InitialConfig extends AppCompatActivity {
             load.dismiss();
             JSONObject obj = new JSONObject(list);
 
-            if(list == "" || list == null){
+            Log.e("ServicePay", list);
+
+            if(list == "" || list == null || obj.getString("u").isEmpty()){
                 msg.setText("Terminal não configurado");
                 msg2.setText("Acesse portal.comnect.com.br e configure um novo terminal com o numero de série:");
                 txt_serial.setVisibility(VISIBLE);
@@ -84,7 +86,6 @@ public class InitialConfig extends AppCompatActivity {
     private void requestIni(String list){
         try {
             load.dismiss();
-            Log.e("ServicePay", list);
 
             if(list == "" || list == null){
                 msg.setText("Terminal não configurado");
@@ -104,26 +105,24 @@ public class InitialConfig extends AppCompatActivity {
             String pdv = message.getString("cod_pdv");
             String ip = message.getString("tls_srv_ip");
 
-            if(empresa != null){
-                if(filial != null){
-                    if(pdv !=null){
-                        if(ip != ""){
-                            Intent i = new Intent(InitialConfig.this, HomeActivity.class);
-                            Log.e("ServicePay", "Loading HomeActivity");
-                            startActivity(i);
+            if(empresa != null && filial != null && pdv != null && ip != null){
 
-                            //msg.setText("Terminal configurado com sucesso \nEmpresa: " + empresa + "\nFilial: " + filial + "\nPDV: " + pdv + "\nIP: " + ip);
-                        }else{
-                            msg.setText("Ip do servidor inválido");
-                        }
-                    }else{
-                        msg.setText("PDV Inválido");
-                    }
+                GenerateScopeIni gini = new GenerateScopeIni();
+
+                if(gini.generate(empresa, filial, pdv, ip)) {
+                    Intent i = new Intent(InitialConfig.this, HomeActivity.class);
+                    startActivity(i);
                 }else{
-                    msg.setText("Filial Inválida");
+                    msg.setText("Erro interno");
+                    msg2.setText("contate o suporte");
+                    txt_serial.setVisibility(VISIBLE);
+                    txt_serial.setText("Err: #60ueduf");
+
+                    return;
                 }
+
             }else{
-                msg.setText("Empresa Inválida");
+                msg.setText("Configuração inválida, contate o suporte");
             }
 
         } catch (Exception e) {
